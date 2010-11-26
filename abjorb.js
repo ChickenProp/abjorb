@@ -5,7 +5,7 @@ var player;
 function abjorb () {
     G = new Global();
 
-    player = new Cell($V([320, 240]), $V([0,0]), 20);
+    player = new Cell($V(320, 240), $V(0,0), 20);
 
     setInterval(mainloop, 1000/60);
 
