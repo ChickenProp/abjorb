@@ -10,6 +10,8 @@ function abjorb () {
     setInterval(mainloop, 1000/60);
 
     $(document).click(function(e){player.clickHandler(e)});
+
+	$('#sound_element').html("<embed src=media/test.wav hidden=true autostart=true loop=false>");
 }
 
 function mainloop () {
