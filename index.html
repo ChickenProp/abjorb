@@ -1,19 +1,7 @@
 <html>  
   <head>  
     <script type="text/javascript" src="jQuery.js"></script>
-
-  <script type="application/javascript">  
- function draw() {  
-  var canvas = $("canvas")[0];
-  var ctx = canvas.getContext("2d");  
-   
-  ctx.fillStyle = "rgb(200,0,0)";  
-  ctx.fillRect (10, 10, 55, 50);  
-   
-  ctx.fillStyle = "rgba(0, 0, 200, 0.5)";  
-  ctx.fillRect (30, 30, 55, 50);  
- }  
-   </script>  
+    <script type="text/javascript" src="abjorb.js"></script>
   </head>  
   <body onload="draw()">  
     <canvas id="canvas" width="300" height="300"></canvas>  
