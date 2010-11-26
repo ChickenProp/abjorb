@@ -7,6 +7,14 @@ function Cell (pos, vel, radius) {
 
 Cell.prototype.update = function () {
     this.pos = this.pos.a(this.vel);
+	if ( this.pos.x < this.radius )
+		this.vel.x = -this.vel.x;
+	if ( this.pos.x > 640 - this.radius )
+		this.vel.x = -this.vel.x;
+	if ( this.pos.y <  this.radius )
+		this.vel.y = -this.vel.y;
+	if ( this.pos.y > 480 - this.radius )
+		this.vel.y = -this.vel.y;
 }
 
 Cell.prototype.draw = function () {
