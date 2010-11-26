@@ -5,6 +5,8 @@ var player;
 function abjorb () {
     G = new Global();
 
+	$(G.canvas).css('cursor','crosshair');
+	
     world = new World();
 
     setInterval(mainloop, 1000/60);
