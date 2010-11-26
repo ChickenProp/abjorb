@@ -3,10 +3,12 @@ function Cell (pos, vel, radius) {
     this.vel = vel;
 
     this.radius = radius;
+    this.friction = 99/100;
 }
 
 Cell.prototype.update = function () {
     this.pos = this.pos.a(this.vel);
+
 	if ( this.pos.x < this.radius )
 		this.vel.x = -this.vel.x;
 	if ( this.pos.x > 640 - this.radius )
@@ -15,6 +17,8 @@ Cell.prototype.update = function () {
 		this.vel.y = -this.vel.y;
 	if ( this.pos.y > 480 - this.radius )
 		this.vel.y = -this.vel.y;
+
+    this.vel = this.vel.m(this.friction);
 }
 
 Cell.prototype.draw = function () {
