@@ -37,15 +37,22 @@ Cell.prototype.distance = function (other) {
 }
 
 Cell.prototype.absorb = function (other, maxRadius) {
-	var amount = Math.min(other.radiusToMass(maxRadius), 3);
+	var amount = other.radiusToMass(maxRadius);
+
+	var momentum;
+
 	if (other.mass() <= amount) {
+		momentum = other.vel.m(other.mass());
 		this.incMass(other.mass());
 		other.kill();
 	}
-	else { 
+	else {
+		momentum = other.vel.m(amount);
 		this.incMass(amount);
 		other.incMass(-amount);
 	}
+
+	this.vel = this.vel.a(momentum.d(this.mass()));
 }
 
 Cell.prototype.mass = function () {
