@@ -12,7 +12,7 @@ function World () {
     this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 20));
 	this.player.setColour('pink');
 	
-	for (i = 0; i < 100; i++) {
+	for (i = 0; i < 1000; i++) {
 		this.addCell(new Cell($V((Math.random()*this.width-40)+20, (Math.random()*this.height-40)+20), $V(2*Math.random()-1, 2*Math.random()-1), 4));
 	}
 }
@@ -72,12 +72,33 @@ World.prototype.garbageCollect = function () {
 World.prototype.checkCollisions = function () {
 	var collisions = [];
 
-	for (var i = 0; i < this.cells.length; i++) {
-		for (var j = i+1; j < this.cells.length; j++) {
-			var d = this.cells[i].distance(this.cells[j]);
+	// Sort the cells by their leftmost point. When looking at cell i, if we
+	// find a cell whose leftmost point is right of cell i's rightmost
+	// point, we don't have to compare any others against cell i.
+	var cells = this.cells.sort(function(cell1, cell2) {
+		var l1 = cell1.pos.x - cell1.radius;
+		var l2 = cell2.pos.x - cell2.radius;
+
+		if (l1 < l2)
+			return -1;
+		else if (l1 > l2)
+			return 1;
+		else
+			return 0;
+	});
+
+	for (var i = 0; i < cells.length; i++) {
+		var right = cells[i].pos.x + cells[i].radius;
+
+		for (var j = i+1;
+		     j < cells.length && cells[j].pos.x-cells[j].radius < right;
+		     j++)
+		{
+
+			var d = cells[i].distance(cells[j]);
 			if (d < 0) {
 				collisions.push({
-					pair: [this.cells[i], this.cells[j]],
+					pair: [cells[i], cells[j]],
 					intersection: -d
 				});
 			}
