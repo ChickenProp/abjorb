@@ -1,6 +1,6 @@
 function World () {
-	this.width = 800;
-	this.height = 640;
+	this.width = 960;
+	this.height = 720;
 
 	this.cells = [];
 	
