@@ -47,6 +47,8 @@ Camera.prototype.update = function () {
 
 	this.pos.y = Math.max(hzoom / 2, this.pos.y);
 	this.pos.y = Math.min(G.world.height - hzoom / 2, this.pos.y);
+
+	console.log(this.zoom);
 }
 
 Camera.prototype.scrollHandler = function (e) {
@@ -54,4 +56,8 @@ Camera.prototype.scrollHandler = function (e) {
 		this.zoom += 0.1;
 	else if (e.wheelDelta < 0)
 		this.zoom -= 0.1;
+
+	if (this.zoom < 2/3)
+		this.zoom = 2/3;
+
 }

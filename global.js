@@ -9,16 +9,16 @@ function Global () {
 
 	this.images = [];
 	bluecell = new Image();
-	bluecell.src = 'media/blob.png?'+(new Date()).getTime();
+	bluecell.src = 'media/blobsarah2.png?'+(new Date()).getTime();
 	this.images.bluecell = bluecell;
 	redcell = new Image();
-	redcell.src = 'media/redblob.png?'+(new Date()).getTime();
+	redcell.src = 'media/redblob2.png?'+(new Date()).getTime();
 	this.images.redcell = redcell;
 	pinkcell = new Image();
 	pinkcell.src = 'media/pinkblob.png?'+(new Date()).getTime();
 	this.images.pinkcell = pinkcell;
 	world = new Image();
-	world.src = 'media/bg.png?'+(new Date()).getTime();
+	world.src = 'media/bg3.png?'+(new Date()).getTime();
 	this.images.world = world;
 	title = new Image();
 	title.src = 'media/title.png?'+(new Date()).getTime();	
