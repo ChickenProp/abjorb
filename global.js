@@ -6,6 +6,8 @@ function Global () {
 	cell = new Image();
 	cell.src = 'media/blob.png';
 	this.images.cell = cell;
+}
 
-    this.world = new World();
+Global.prototype.createWorld = function () {
+   this.world = new World();
 }
