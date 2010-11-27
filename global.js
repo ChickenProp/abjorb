@@ -26,6 +26,7 @@ function Global () {
 	
 	this.current = new Title();
 	
+	this.multiplayer = false
 	this.net = new Net();
 }
 
