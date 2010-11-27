@@ -8,7 +8,7 @@ function abjorb () {
 	G.current;
 	setInterval(mainloop, 1000/60);
 
-	$(document).click(function (e) {
+	$(G.canvas).click(function (e) {
 		G.current.clickHandler(e)
 	});
 	$(G.canvas).bind('mousewheel', function (e) {
