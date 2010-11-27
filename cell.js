@@ -38,14 +38,31 @@ Cell.prototype.update = function () {
 Cell.prototype.draw = function () {
 	ctx = G.context;
 	
-	// 75/57 is because the image is stupid-sized.
-	var drawRadius = this.radius * 75/57 * G.world.camera.zoom;
 	var posScreen = G.world.camera.worldToScreen(this.pos);
-	ctx.drawImage(G.images[this.colour+'cell'],
-		      posScreen.x - drawRadius,
-		      posScreen.y - drawRadius,
-		      drawRadius*2,
-		      drawRadius*2);
+	var zoomrad = G.world.camera.zoom * this.radius;
+
+	if (posScreen.x + zoomrad < 0
+	    || posScreen.x - zoomrad > G.canvas.width
+	    || posScreen.y + zoomrad < 0
+	    || posScreen.y - zoomrad > G.canvas.height)
+		return;
+
+	if (G.lowGraphics) {
+		ctx.fillStyle = this.colour;
+		ctx.beginPath();
+		ctx.arc(posScreen.x, posScreen.y, zoomrad, 0, Math.PI*2, true);
+		ctx.closePath();
+		ctx.fill();
+	}
+	else {
+		// 75/57 is because the image is stupid-sized.
+		var drawRadius = zoomrad * 75/57;
+		ctx.drawImage(G.images[this.colour+'cell'],
+			      posScreen.x - drawRadius,
+			      posScreen.y - drawRadius,
+			      drawRadius*2,
+			      drawRadius*2);
+	}
 }
 
 // Distance between the closest points of two cells. 0 if they are tangent,

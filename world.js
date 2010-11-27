@@ -32,12 +32,16 @@ World.prototype.draw = function () {
 	G.context.fillStyle = "rgb(255, 255, 255)";
 	G.context.fillRect(0, 0, G.canvas.width, G.canvas.height);
 
-	var topleft = this.camera.worldToScreen($V(0, 0));
-	G.context.drawImage(G.images.world, topleft.x, topleft.y,
-			    G.images.world.width * this.camera.zoom,
-			    G.images.world.height * this.camera.zoom);
+	if (!G.lowGraphics) {
+		var topleft = this.camera.worldToScreen($V(0, 0));
+		G.context.drawImage(G.images.world, topleft.x, topleft.y,
+				    G.images.world.width * this.camera.zoom,
+				    G.images.world.height * this.camera.zoom);
+	}
 
-	$.each(this.cells, function(i, c) { c.draw(); });
+	for (var i = 0; i < this.cells.length; i++) {
+		this.cells[i].draw();
+	}
 }
 
 World.prototype.addCell = function (cell) {

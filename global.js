@@ -3,6 +3,8 @@ function Global () {
 	this.context = this.canvas.getContext("2d");
 	this.screenCentre = $V(this.canvas.width/2, this.canvas.height/2);
 
+	this.lowGraphics = false;
+
 	this.images = [];
 	bluecell = new Image();
 	bluecell.src = 'media/blob.png?'+(new Date()).getTime();
