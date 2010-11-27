@@ -6,6 +6,13 @@ function Cell (pos, vel, radius) {
 	this.dead = false;
 	
 	this.colour = 'blue';
+
+	// This is a ratio of current mass.
+	this.minspawnmass = 0.005;
+	this.spawnmassratio = 1.3;
+	this.maxspawnmass = this.minspawnmass * Math.pow(this.spawnmassratio,4);
+	this.spawnmass = this.minspawnmass;
+	this.lastspawn = -Infinity;
 }
 
 Cell.prototype.kill = function () {
@@ -14,10 +21,6 @@ Cell.prototype.kill = function () {
 }
 
 Cell.prototype.update = function () {
-	if (isNaN(this.pos.x)
-	    || isNaN(this.vel.x))
-		console.log("a cell is NaN");
-
 	this.pos = this.pos.a(this.vel);
 
 	if ( this.pos.x < (this.radius + 5)) {
@@ -32,6 +35,11 @@ Cell.prototype.update = function () {
 	} if ( this.pos.y > G.world.height - (this.radius + 5) ) {
 		this.vel.y = -this.vel.y;
 		this.pos.y = G.world.height - (this.radius + 5);
+	}
+
+	if (this.lastspawn <= G.time - 10) {
+		this.spawnmass /= this.spawnmassratio;
+		this.spawnmass = Math.max(this.spawnmass, this.minspawnmass);
 	}
 }
 
@@ -89,9 +97,6 @@ Cell.prototype.absorb = function (other, maxRadius) {
 	}
 
 	this.vel = this.vel.a(momentum.d(this.mass()));
-
-	if (isNaN(this.vel.x) || isNaN(other.vel.x))
-		console.log("a new cell is NaN");
 }
 
 Cell.prototype.mass = function () {
@@ -113,6 +118,9 @@ Cell.prototype.radiusToMass = function (radius) {
 }
 
 Cell.prototype.clickHandler = function (e) {
+	if (G.time - this.lastspawn <= 3)
+		return;
+
 	var screenLoc = $V(e.pageX - G.canvas.offsetLeft,
 			   e.pageY - G.canvas.offsetTop);
 	var loc = G.world.camera.screenToWorld(screenLoc);
@@ -121,8 +129,10 @@ Cell.prototype.clickHandler = function (e) {
 
 	var spawn = new Cell();
 
-	spawn.radius = spawn.massToRadius(this.mass()*0.01);
-	var spawnVelRel = direction.m(-2);
+	spawn.radius = spawn.massToRadius(this.mass()*this.spawnmass);
+	var spawnVelRel = direction.m(-4);
+
+	console.log([this.spawnmass, this.mass(), spawn.mass(), G.time]);
 
 	this.radius = this.massToRadius(this.mass() - spawn.mass());
 	var thisVelRel = spawnVelRel.m( - spawn.mass() / this.mass() );
@@ -133,6 +143,10 @@ Cell.prototype.clickHandler = function (e) {
 	spawn.pos = this.pos.a(direction.m(-this.radius - spawn.radius));
 
 	G.world.addCell(spawn);
+
+	this.spawnmass *= this.spawnmassratio;
+	this.spawnmass = Math.min(this.spawnmass, this.maxspawnmass);
+	this.lastspawn = G.time;
 }
 
 Cell.prototype.setColour = function (colour) {
