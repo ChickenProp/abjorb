@@ -1,0 +1,58 @@
+<html>  
+  <head>  
+    <script type="text/javascript" src="jQuery.js"></script>
+	<script type="text/javascript" src="Stats.js"></script>
+	<script type="text/javascript" >
+		// Display FPS
+		var stats;
+		$(function () {
+			stats = new Stats();
+
+			// Align top-left
+			stats.domElement.style.position = 'absolute';
+			stats.domElement.style.right = '0px';
+			stats.domElement.style.top = '0px';
+
+			$('body').append( stats.domElement );
+		});
+	</script>
+	<script src="jquery.disable.text.select.js"></script>
+	<script type="text/javascript" >
+		$(function () {
+			$(window).disableTextSelect();
+		});
+	</script>
+    <script type="text/javascript" src="vector.js"></script>
+    <script type="text/javascript" src="global.js"></script>
+    <script type="text/javascript" src="camera.js"></script>
+    <script type="text/javascript" src="world.js"></script>
+    <script type="text/javascript" src="cell.js"></script>
+    <script type="text/javascript" src="abjorb.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			var frame = 0;
+			conn = new WebSocket("ws://uwcs.co.uk:8035");
+			conn.onopen = function(evt) {
+				console.log("Conn opened");
+			}
+			conn.onmessage = function(evt) {
+				if (evt.data == 'draw') {
+					conn.send('drawn');
+					stats.update();
+					stats.update();
+					frame += 2;
+					$('#frame').text('Frame: '+frame);
+				}
+			}
+			conn.onclose = function(evt) {
+				console.log("Conn closed");
+			}
+		});
+	</script>
+  </head>  
+  <body style="background-color: #ddd">  
+	<div id="frame">
+	</div>
+  </body>  
+ </html>  
+
