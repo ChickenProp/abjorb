@@ -116,3 +116,18 @@ World.prototype.handleCollisions = function (collisions) {
 	});
 }
 
+World.prototype.clickHandler = function (e){
+	var screenLoc = $V(e.pageX - G.canvas.offsetLeft,
+		   e.pageY - G.canvas.offsetTop);
+	this.camera.screenToWorld(screenLoc)
+	this.player.clickHandler(screenLoc)
+}
+
+World.prototype.scrollHandler = function (e){
+	this.camera.scrollHandler(e);
+
+}
+
+
+
+
