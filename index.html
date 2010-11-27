@@ -1,6 +1,32 @@
 <html>  
   <head>  
     <script type="text/javascript" src="jQuery.js"></script>
+	<script type="text/javascript" src="Stats.js"></script>
+	<script type="text/javascript" >
+		// Display FPS
+		$(function () {
+			var stats = new Stats();
+
+			// Align top-left
+			stats.domElement.style.position = 'absolute';
+			stats.domElement.style.right = '0px';
+			stats.domElement.style.top = '0px';
+
+			$('body').append( stats.domElement );
+
+			setInterval( function () {
+
+				stats.update();
+
+			}, 1000 / 60 );
+		});
+	</script>
+	<script src="jquery.disable.text.select.js"></script>
+	<script type="text/javascript" >
+		$(function () {
+			$(window).disableTextSelect();
+		});
+	</script>
     <script type="text/javascript" src="vector.js"></script>
     <script type="text/javascript" src="global.js"></script>
     <script type="text/javascript" src="world.js"></script>
@@ -9,5 +35,7 @@
   </head>  
   <body onload="abjorb()">  
     <canvas id="canvas" width="640" height="480"></canvas>  
+	<div id="sound_element"></div>
   </body>  
  </html>  
+
