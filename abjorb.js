@@ -4,6 +4,7 @@ var player;
 
 function abjorb () {
     G = new Global();
+	G.createWorld();
 
     setInterval(mainloop, 1000/60);
 
@@ -11,7 +12,7 @@ function abjorb () {
 
 	$(G.canvas).css('cursor','crosshair');
 	
-	$('#sound_element').html("<embed src=media/test.wav hidden=true autostart=true loop=false>");
+	//$('#sound_element').html("<embed src=media/test.wav hidden=true autostart=true loop=false>");
 }
 
 function mainloop () {
