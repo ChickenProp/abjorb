@@ -22,6 +22,7 @@ Net.prototype.connect = function () {
 								G.world.player.colour = function () { return "pink"; };
 							}
 						} else {
+							
 							netcell[cell.cell].clickHandler($V(cell.click[0],cell.click[1]));
 						}
 					});
