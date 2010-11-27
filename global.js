@@ -3,9 +3,12 @@ function Global () {
     this.context = this.canvas.getContext("2d");
 
 	this.images = [];
-	cell = new Image();
-	cell.src = 'media/blob.png?'+(new Date()).getTime();
-	this.images.cell = cell;
+	bluecell = new Image();
+	bluecell.src = 'media/blob.png?'+(new Date()).getTime();
+	this.images.bluecell = bluecell;
+	pinkcell = new Image();
+	pinkcell.src = 'media/pinkblob.png?'+(new Date()).getTime();
+	this.images.pinkcell = pinkcell;
 	world = new Image();
 	world.src = 'media/bg.png?'+(new Date()).getTime();
 	this.images.world = world;

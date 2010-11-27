@@ -10,6 +10,11 @@ function World () {
 	}
 
     this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 20));
+	this.player.setColour('pink');
+	
+	for (i = 0; i < 100; i++) {
+		this.addCell(new Cell($V((Math.random()*this.width-40)+20, (Math.random()*this.height-40)+20), $V(2*Math.random()-1, 2*Math.random()-1), 4));
+	}
 }
 
 World.prototype.update = function () {

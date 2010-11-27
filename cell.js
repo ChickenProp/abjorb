@@ -4,6 +4,8 @@ function Cell (pos, vel, radius) {
 
 	this.radius = radius;
 	this.dead = false;
+	
+	this.colour = 'blue';
 }
 
 Cell.prototype.kill = function () {
@@ -14,20 +16,25 @@ Cell.prototype.kill = function () {
 Cell.prototype.update = function () {
 	this.pos = this.pos.a(this.vel);
 
-	if ( this.pos.x < (this.radius + 5))
+	if ( this.pos.x < (this.radius + 5)) {
 		this.vel.x = -this.vel.x;
-	if ( this.pos.x > G.world.width - (this.radius + 5) )
+		this.pos.x = (this.radius + 5);
+	} if ( this.pos.x > G.world.width - (this.radius + 5) ) {
 		this.vel.x = -this.vel.x;
-	if ( this.pos.y < (this.radius + 5) )
+		this.pos.x = G.world.width - (this.radius + 5);
+	} if ( this.pos.y < (this.radius + 5) ) {
 		this.vel.y = -this.vel.y;
-	if ( this.pos.y > G.world.height - (this.radius + 5) )
+		this.pos.y = (this.radius + 5);
+	} if ( this.pos.y > G.world.height - (this.radius + 5) ) {
 		this.vel.y = -this.vel.y;
+		this.pos.y = G.world.height - (this.radius + 5);
+	}
 }
 
 Cell.prototype.draw = function () {
 	ctx = G.context;
 	
-	ctx.drawImage(G.images.cell, this.pos.x-this.radius-G.world.camera.x, this.pos.y-this.radius-G.world.camera.y, this.radius*2, this.radius*2);
+	ctx.drawImage(G.images[this.colour+'cell'], this.pos.x-(this.radius/57*75)-G.world.camera.x, this.pos.y-(this.radius/57*75)-G.world.camera.y, (this.radius/57*75)*2, (this.radius/57*75)*2);
 }
 
 // Distance between the closest points of two cells. 0 if they are tangent,
@@ -37,7 +44,7 @@ Cell.prototype.distance = function (other) {
 }
 
 Cell.prototype.absorb = function (other, maxRadius) {
-	var amount = Math.min(other.radiusToMass(maxRadius), 3);
+	var amount = other.radiusToMass(maxRadius);
 	if (other.mass() <= amount) {
 		this.incMass(other.mass());
 		other.kill();
@@ -86,4 +93,8 @@ Cell.prototype.clickHandler = function (e) {
 	spawn.pos = this.pos.a(direction.m(-this.radius - spawn.radius));
 
 	G.world.addCell(spawn);
+}
+
+Cell.prototype.setColour = function (colour) {
+	this.colour = colour;
 }
