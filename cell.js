@@ -3,7 +3,6 @@ function Cell (pos, vel, radius) {
     this.vel = vel;
 
     this.radius = radius;
-    this.friction = 99/100;
 }
 
 Cell.prototype.update = function () {
@@ -17,8 +16,6 @@ Cell.prototype.update = function () {
 		this.vel.y = -this.vel.y;
 	if ( this.pos.y > 480 - this.radius )
 		this.vel.y = -this.vel.y;
-
-    this.vel = this.vel.m(this.friction);
 }
 
 Cell.prototype.draw = function () {
@@ -29,6 +26,11 @@ Cell.prototype.draw = function () {
     ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI*2, true);
     ctx.closePath();
     ctx.fill();
+}
+
+Cell.prototype.isTouching = function (other) {
+    var radSum = this.radius + other.radius;
+    return radSum * radSum < this.pos.s(other.pos).lengthSquared();
 }
 
 Cell.prototype.mass = function () {
@@ -47,7 +49,7 @@ Cell.prototype.clickHandler = function (e) {
 
     var spawn = new Cell();
 
-    spawn.radius = 3;
+    spawn.radius = spawn.massToRadius(this.mass()*0.05);
     var spawnVelRel = direction.m(-3);
 
     this.radius = this.massToRadius(this.mass() - spawn.mass());

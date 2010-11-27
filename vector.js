@@ -37,10 +37,17 @@ Vector.prototype = {
 		return ret;
 	},
 
-	normalize:function() {
-	    var mod = Math.sqrt (this.x * this.x + this.y * this.y );
-	    return this.d(mod);	
-	}
+    lengthSquared: function() {
+	return this.x * this.x + this.y * this.y;
+    },
+
+    length: function () {
+	return Math.sqrt(this.lengthSquared());
+    },
+
+    normalize:function() {
+	return this.d(this.length());	
+    }
 }
 
 function $V(x,y){

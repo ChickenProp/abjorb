@@ -23,3 +23,17 @@ World.prototype.addCell = function (cell) {
     return cell;
 }
 
+World.prototype.checkCollisions = function () {
+    var collisions = [];
+
+    for (var i = 0; i < cells.length; i++) {
+	for (var j = i+1; i < cells.length; j++) {
+	    if (cells[i].isTouching(cells[j])) {
+		collisions.push([cells[i], cells[j]]);
+	    }
+	}
+    }
+    
+    return collisions;
+}
+
