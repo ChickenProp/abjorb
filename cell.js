@@ -20,12 +20,8 @@ Cell.prototype.update = function () {
 
 Cell.prototype.draw = function () {
     ctx = G.context;
-
-    ctx.fillStyle = "rgb(200, 0, 0)";
-    ctx.beginPath();
-    ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI*2, true);
-    ctx.closePath();
-    ctx.fill();
+	
+	ctx.drawImage(G.images.cell, this.pos.x-this.radius, this.pos.y-this.radius, this.radius*2, this.radius*2);
 }
 
 Cell.prototype.isTouching = function (other) {
