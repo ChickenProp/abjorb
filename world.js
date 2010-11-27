@@ -36,6 +36,23 @@ World.prototype.update = function () {
 	this.garbageCollect();
 
 	this.camera.update();
+
+	var cells = this.cells.sort(function(cell1, cell2) {
+		var l1 = cell1.pos.x - cell1.radius;
+		var l2 = cell2.pos.x - cell2.radius;
+
+		if (l1 < l2)
+			return -1;
+		else if (l1 > l2)
+			return 1;
+		else
+			return 0;
+	});
+
+//	var smallest = this.cells[ Math.floor( this.cells.length /10 )].radius;
+//	if (smallest > player.radius)
+//		G.current = new Title();
+
 }
 
 World.prototype.draw = function () {
