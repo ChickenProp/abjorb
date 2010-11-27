@@ -7,14 +7,20 @@ function World () {
 	this.camera = new Camera(G.screenCentre);
 	//this.camera = new Camera($V(0,0));
 
-	this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 20));
+	this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 4));
 	this.player.setColour('pink');
 	
+	for (i = 0; i < 100; i++) {
+		this.addCell(new Cell($V((Math.random()*this.width-40)+20,
+					 (Math.random()*this.height-40)+20),
+				      $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+				      6*Math.random()+6));
+	}
 	for (i = 0; i < 1000; i++) {
 		this.addCell(new Cell($V((Math.random()*this.width-40)+20,
 					 (Math.random()*this.height-40)+20),
-				      $V(2*Math.random()-1, 2*Math.random()-1),
-				      4));
+				      $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+				      4*Math.random()));
 	}
 }
 
