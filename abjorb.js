@@ -8,7 +8,12 @@ function abjorb () {
 
 	setInterval(mainloop, 1000/60);
 
-	$(document).click(function(e){G.world.player.clickHandler(e)});
+	$(G.canvas).click(function (e) {
+		var screenLoc = $V(e.pageX - G.canvas.offsetLeft,
+			   e.pageY - G.canvas.offsetTop);
+		G.world.camera.screenToWorld(screenLoc)
+		G.world.player.clickHandler(screenLoc)
+	});
 	$(G.canvas).bind('mousewheel', function (e) {
 		G.world.camera.scrollHandler(e);
 	});

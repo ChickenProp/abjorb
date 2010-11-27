@@ -14,7 +14,7 @@ Camera.prototype.worldToScreen = function (v) {
 }
 
 Camera.prototype.update = function () {
-	if (G.world.player.dead)
+	if (G.world.player === undefined || G.world.player.dead)
 		return;
 
 	var ppos = G.world.player.pos.copy();

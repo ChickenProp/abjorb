@@ -72,7 +72,7 @@ Cell.prototype.draw = function () {
 }
 
 Cell.prototype.colour = function () {
-	return this.radius > G.world.player.radius ? 'red' : 'blue';
+	return (G.world.player === undefined || this.radius > G.world.player.radius) ? 'red' : 'blue';
 }
 
 Cell.prototype.image = function () {
@@ -123,13 +123,9 @@ Cell.prototype.radiusToMass = function (radius) {
 	return Math.pow(radius, 3);
 }
 
-Cell.prototype.clickHandler = function (e) {
+Cell.prototype.clickHandler = function (loc) {
 	if (G.time - this.lastspawn <= 3)
 		return;
-
-	var screenLoc = $V(e.pageX - G.canvas.offsetLeft,
-			   e.pageY - G.canvas.offsetTop);
-	var loc = G.world.camera.screenToWorld(screenLoc);
 
 	var direction = this.pos.s(loc).normalize();
 

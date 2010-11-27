@@ -6,10 +6,14 @@ function World () {
 	
 	this.camera = new Camera(G.screenCentre);
 	//this.camera = new Camera($V(0,0));
+}
 
+World.prototype.addPlayer = function () {
 	this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 4));
 	this.player.colour = function () { return "pink"; };
-	
+}
+
+World.prototype.level = function () {
 	for (i = 0; i < 100; i++) {
 		this.addCell(new Cell($V((Math.random()*this.width-40)+20,
 					 (Math.random()*this.height-40)+20),
