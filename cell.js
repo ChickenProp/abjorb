@@ -84,7 +84,7 @@ Cell.prototype.clickHandler = function (e) {
 	spawn.vel = this.vel.a(spawnVelRel);
 	this.vel = this.vel.a(thisVelRel);
 
-	spawn.pos = this.pos;
+	spawn.pos = this.pos.a(direction.m(-this.radius - spawn.radius));
 
 	G.world.addCell(spawn);
 }
