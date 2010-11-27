@@ -23,4 +23,6 @@ function mainloop () {
 
 	G.world.update();
 	G.world.draw();
+	
+	stats.update();
 }

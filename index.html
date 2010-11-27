@@ -4,8 +4,9 @@
 	<script type="text/javascript" src="Stats.js"></script>
 	<script type="text/javascript" >
 		// Display FPS
+		var stats
 		$(function () {
-			var stats = new Stats();
+			stats = new Stats();
 
 			// Align top-left
 			stats.domElement.style.position = 'absolute';
@@ -14,11 +15,6 @@
 
 			$('body').append( stats.domElement );
 
-			setInterval( function () {
-
-				stats.update();
-
-			}, 1000 / 60 );
 		});
 	</script>
 	<script src="jquery.disable.text.select.js"></script>
