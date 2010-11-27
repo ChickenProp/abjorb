@@ -5,19 +5,16 @@ var player;
 function abjorb () {
     G = new Global();
 
-	$(G.canvas).css('cursor','crosshair');
-	
-    world = new World();
-
     setInterval(mainloop, 1000/60);
 
-    $(document).click(function(e){world.player.clickHandler(e)});
+    $(document).click(function(e){G.world.player.clickHandler(e)});
 
+	$(G.canvas).css('cursor','crosshair');
+	
 	$('#sound_element').html("<embed src=media/test.wav hidden=true autostart=true loop=false>");
-
 }
 
 function mainloop () {
-    world.update();
-    world.draw();
+    G.world.update();
+    G.world.draw();
 }
