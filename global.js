@@ -11,6 +11,9 @@ function Global () {
 	bluecell = new Image();
 	bluecell.src = 'media/blob.png?'+(new Date()).getTime();
 	this.images.bluecell = bluecell;
+	redcell = new Image();
+	redcell.src = 'media/redblob.png?'+(new Date()).getTime();
+	this.images.redcell = redcell;
 	pinkcell = new Image();
 	pinkcell.src = 'media/pinkblob.png?'+(new Date()).getTime();
 	this.images.pinkcell = pinkcell;

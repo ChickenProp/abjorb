@@ -5,10 +5,8 @@ function Cell (pos, vel, radius) {
 	this.radius = radius;
 	this.dead = false;
 	
-	this.colour = 'blue';
-
 	// This is a ratio of current mass.
-	this.minspawnmass = 0.005;
+	this.minspawnmass = 0.05;
 	this.spawnmassratio = 1.3;
 	this.maxspawnmass = this.minspawnmass * Math.pow(this.spawnmassratio,4);
 	this.spawnmass = this.minspawnmass;
@@ -56,7 +54,7 @@ Cell.prototype.draw = function () {
 		return;
 
 	if (G.lowGraphics) {
-		ctx.fillStyle = this.colour;
+		ctx.fillStyle = this.colour();
 		ctx.beginPath();
 		ctx.arc(posScreen.x, posScreen.y, zoomrad, 0, Math.PI*2, true);
 		ctx.closePath();
@@ -65,12 +63,20 @@ Cell.prototype.draw = function () {
 	else {
 		// 75/57 is because the image is stupid-sized.
 		var drawRadius = zoomrad * 75/57;
-		ctx.drawImage(G.images[this.colour+'cell'],
+		ctx.drawImage(this.image(),
 			      posScreen.x - drawRadius,
 			      posScreen.y - drawRadius,
 			      drawRadius*2,
 			      drawRadius*2);
 	}
+}
+
+Cell.prototype.colour = function () {
+	return this.radius > G.world.player.radius ? 'red' : 'blue';
+}
+
+Cell.prototype.image = function () {
+	return G.images[this.colour() + 'cell'];
 }
 
 // Distance between the closest points of two cells. 0 if they are tangent,
@@ -132,8 +138,6 @@ Cell.prototype.clickHandler = function (e) {
 	spawn.radius = spawn.massToRadius(this.mass()*this.spawnmass);
 	var spawnVelRel = direction.m(-4);
 
-	console.log([this.spawnmass, this.mass(), spawn.mass(), G.time]);
-
 	this.radius = this.massToRadius(this.mass() - spawn.mass());
 	var thisVelRel = spawnVelRel.m( - spawn.mass() / this.mass() );
 
@@ -147,8 +151,4 @@ Cell.prototype.clickHandler = function (e) {
 	this.spawnmass *= this.spawnmassratio;
 	this.spawnmass = Math.min(this.spawnmass, this.maxspawnmass);
 	this.lastspawn = G.time;
-}
-
-Cell.prototype.setColour = function (colour) {
-	this.colour = colour;
 }

@@ -8,7 +8,7 @@ function World () {
 	//this.camera = new Camera($V(0,0));
 
 	this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 4));
-	this.player.setColour('pink');
+	this.player.colour = function () { return "pink"; };
 	
 	for (i = 0; i < 100; i++) {
 		this.addCell(new Cell($V((Math.random()*this.width-40)+20,
