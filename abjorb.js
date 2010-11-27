@@ -4,13 +4,13 @@ var player;
 
 function abjorb () {
 	G = new Global();
-	G.createWorld();
-
+//	G.createWorld();
+	G.current;
 	setInterval(mainloop, 1000/60);
 
-	$(document).click(function(e){G.world.player.clickHandler(e)});
+	$(document).click(function(e){G.current.clickHandler(e)});
 	$(G.canvas).bind('mousewheel', function (e) {
-		G.world.camera.scrollHandler(e);
+		G.current.scrollHandler(e);
 	});
 
 	$(G.canvas).css('cursor','crosshair');
@@ -21,8 +21,8 @@ function abjorb () {
 function mainloop () {
 	G.time++;
 
-	G.world.update();
-	G.world.draw();
+	G.current.update();
+	G.current.draw();
 	
 	stats.update();
 }

@@ -112,3 +112,16 @@ World.prototype.handleCollisions = function (collisions) {
 	});
 }
 
+World.prototype.clickHandler = function (e){
+this.player.clickHandler(e);
+
+}
+
+World.prototype.scrollHandler = function (e){
+	this.camera.scrollHandler(e);
+
+}
+
+
+
+

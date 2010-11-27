@@ -20,8 +20,10 @@ function Global () {
 	world = new Image();
 	world.src = 'media/bg.png?'+(new Date()).getTime();
 	this.images.world = world;
+	this.current = new Title();
 }
 
 Global.prototype.createWorld = function () {
    this.world = new World();
+	this.current = this.world;
 }
