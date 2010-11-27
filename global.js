@@ -1,6 +1,7 @@
 function Global () {
-    this.canvas = $("canvas")[0];
-    this.context = this.canvas.getContext("2d");
+	this.canvas = $("canvas")[0];
+	this.context = this.canvas.getContext("2d");
+	this.screenCentre = $V(this.canvas.width/2, this.canvas.height/2);
 
 	this.images = [];
 	bluecell = new Image();

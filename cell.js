@@ -14,6 +14,10 @@ Cell.prototype.kill = function () {
 }
 
 Cell.prototype.update = function () {
+	if (isNaN(this.pos.x)
+	    || isNaN(this.vel.x))
+		console.log("a cell is NaN");
+
 	this.pos = this.pos.a(this.vel);
 
 	if ( this.pos.x < (this.radius + 5)) {
@@ -34,7 +38,14 @@ Cell.prototype.update = function () {
 Cell.prototype.draw = function () {
 	ctx = G.context;
 	
-	ctx.drawImage(G.images[this.colour+'cell'], this.pos.x-(this.radius/57*75)-G.world.camera.x, this.pos.y-(this.radius/57*75)-G.world.camera.y, (this.radius/57*75)*2, (this.radius/57*75)*2);
+	// 75/57 is because the image is stupid-sized.
+	var drawRadius = this.radius * 75/57 * G.world.camera.zoom;
+	var posScreen = G.world.camera.worldToScreen(this.pos);
+	ctx.drawImage(G.images[this.colour+'cell'],
+		      posScreen.x - drawRadius,
+		      posScreen.y - drawRadius,
+		      drawRadius*2,
+		      drawRadius*2);
 }
 
 // Distance between the closest points of two cells. 0 if they are tangent,
@@ -44,6 +55,9 @@ Cell.prototype.distance = function (other) {
 }
 
 Cell.prototype.absorb = function (other, maxRadius) {
+	if (other.dead)
+		return;
+
 	var amount = other.radiusToMass(maxRadius);
 	var momentum;
 	if (other.mass() <= amount) {
@@ -58,6 +72,9 @@ Cell.prototype.absorb = function (other, maxRadius) {
 	}
 
 	this.vel = this.vel.a(momentum.d(this.mass()));
+
+	if (isNaN(this.vel.x) || isNaN(other.vel.x))
+		console.log("a new cell is NaN");
 }
 
 Cell.prototype.mass = function () {
@@ -79,8 +96,9 @@ Cell.prototype.radiusToMass = function (radius) {
 }
 
 Cell.prototype.clickHandler = function (e) {
-	var loc = $V(e.pageX - G.canvas.offsetLeft + G.world.camera.x,
-		     e.pageY - G.canvas.offsetTop + G.world.camera.y);
+	var screenLoc = $V(e.pageX - G.canvas.offsetLeft,
+			   e.pageY - G.canvas.offsetTop);
+	var loc = G.world.camera.screenToWorld(screenLoc);
 
 	var direction = this.pos.s(loc).normalize();
 

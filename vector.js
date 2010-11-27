@@ -37,17 +37,24 @@ Vector.prototype = {
 		return ret;
 	},
 
-    lengthSquared: function() {
-	return this.x * this.x + this.y * this.y;
-    },
+	lengthSquared: function() {
+		return this.x * this.x + this.y * this.y;
+	},
 
-    length: function () {
-	return Math.sqrt(this.lengthSquared());
-    },
+	length: function () {
+		return Math.sqrt(this.lengthSquared());
+	},
 
-    normalize:function() {
-	return this.d(this.length());	
-    }
+	normalize:function() {
+		if (this.length() == 0)
+			return this;
+		else
+			return this.d(this.length());	
+	},
+
+	copy: function () {
+		return $V(this.x, this.y);
+	},
 }
 
 function $V(x,y){

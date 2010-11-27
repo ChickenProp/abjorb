@@ -3,12 +3,15 @@ var G;
 var player;
 
 function abjorb () {
-    G = new Global();
+	G = new Global();
 	G.createWorld();
 
-    setInterval(mainloop, 1000/60);
+	setInterval(mainloop, 1000/60);
 
-    $(document).click(function(e){G.world.player.clickHandler(e)});
+	$(document).click(function(e){G.world.player.clickHandler(e)});
+	$(G.canvas).bind('mousewheel', function (e) {
+		G.world.camera.scrollHandler(e);
+	});
 
 	$(G.canvas).css('cursor','crosshair');
 	
