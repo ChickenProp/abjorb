@@ -24,11 +24,14 @@ Cell.prototype.update = function () {
 Cell.prototype.draw = function () {
     ctx = G.context;
 
-    ctx.fillStyle = "rgb(200, 0, 0)";
-    ctx.beginPath();
-    ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI*2, true);
-    ctx.closePath();
-    ctx.fill();
+	var radgrad = ctx.createRadialGradient(this.pos.x,this.pos.y,this.radius*0.5,this.pos.x,this.pos.y,this.radius);
+	radgrad.addColorStop(0, '#00C9FF');
+	radgrad.addColorStop(0.8, '#00B5E2');
+	radgrad.addColorStop(1, 'rgba(0,201,255,0)');
+	
+	ctx.fillStyle = radgrad;
+	
+	ctx.fillRect(this.pos.x-this.radius, this.pos.y-this.radius,this.pos.x+this.radius,this.pos.y+this.radius); 
 }
 
 Cell.prototype.clickHandler = function (e) {
