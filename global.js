@@ -22,11 +22,14 @@ function Global () {
 	this.images.world = world;
 	title = new Image();
 	title.src = 'media/title.png?'+(new Date()).getTime();	
-	this.images.title =title;
+	this.images.title = title;
+	
 	this.current = new Title();
+	
+	this.net = new Net();
 }
 
 Global.prototype.createWorld = function () {
-   this.world = new World();
+	this.world = new World();
 	this.current = this.world;
 }
