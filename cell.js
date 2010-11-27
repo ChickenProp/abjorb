@@ -23,15 +23,8 @@ Cell.prototype.update = function () {
 
 Cell.prototype.draw = function () {
     ctx = G.context;
-
-	var radgrad = ctx.createRadialGradient(this.pos.x,this.pos.y,this.radius*0.5,this.pos.x,this.pos.y,this.radius);
-	radgrad.addColorStop(0, '#00C9FF');
-	radgrad.addColorStop(0.8, '#00B5E2');
-	radgrad.addColorStop(1, 'rgba(0,201,255,0)');
 	
-	ctx.fillStyle = radgrad;
-	
-	ctx.fillRect(this.pos.x-this.radius, this.pos.y-this.radius,this.pos.x+this.radius,this.pos.y+this.radius); 
+	ctx.drawImage(G.images.cell, this.pos.x-this.radius, this.pos.y-this.radius, this.radius*2, this.radius*2);
 }
 
 Cell.prototype.mass = function () {
