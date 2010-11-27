@@ -22,11 +22,32 @@ Cell.prototype.draw = function () {
     ctx.fill();
 }
 
+Cell.prototype.mass = function () {
+    return this.radius * this.radius;
+}
+
+Cell.prototype.massToRadius = function (mass) {
+    return Math.sqrt(mass);
+}
+
 Cell.prototype.clickHandler = function (e) {
     var loc = $V(e.pageX - G.canvas.offsetLeft,
 		 e.pageY - G.canvas.offsetTop);
 
-    var offset = this.pos.s(loc);
+    var direction = this.pos.s(loc).normalize();
 
-    this.vel = this.vel.a(offset.normalize().d(2));
+    var spawn = new Cell();
+
+    spawn.radius = 3;
+    var spawnVelRel = direction.m(-3);
+
+    this.radius = this.massToRadius(this.mass() - spawn.mass());
+    var thisVelRel = spawnVelRel.m( - spawn.mass() / this.mass() );
+
+    spawn.vel = this.vel.a(spawnVelRel);
+    this.vel = this.vel.a(thisVelRel);
+
+    spawn.pos = this.pos;
+
+    G.world.addCell(spawn);
 }
