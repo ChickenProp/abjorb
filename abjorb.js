@@ -6,7 +6,8 @@ function abjorb () {
 	G = new Global();
 //	G.createWorld();
 	G.current;
-	setInterval(mainloop, 1000/60);
+	G.mainloopfn = mainloop;
+	G.mainloop = setInterval(mainloop, 1000/60);
 
 	$(G.canvas).click(function (e) {
 		G.current.clickHandler(e)
