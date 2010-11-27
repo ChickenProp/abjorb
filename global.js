@@ -15,7 +15,7 @@ function Global () {
 	redcell.src = 'media/redblob2.png?'+(new Date()).getTime();
 	this.images.redcell = redcell;
 	pinkcell = new Image();
-	pinkcell.src = 'media/pinkblob.png?'+(new Date()).getTime();
+	pinkcell.src = 'media/player.png?'+(new Date()).getTime();
 	this.images.pinkcell = pinkcell;
 	world = new Image();
 	world.src = 'media/bg3.png?'+(new Date()).getTime();
