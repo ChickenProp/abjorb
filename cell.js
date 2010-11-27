@@ -3,19 +3,19 @@ function Cell (pos, vel, radius) {
     this.vel = vel;
 
     this.radius = radius;
-    this.friction = 99/100;
+    this.friction = 1;
 }
 
 Cell.prototype.update = function () {
     this.pos = this.pos.a(this.vel);
 
-	if ( this.pos.x < this.radius )
+	if ( this.pos.x < (this.radius + 5))
 		this.vel.x = -this.vel.x;
-	if ( this.pos.x > G.world.width - this.radius )
+	if ( this.pos.x > G.world.width - (this.radius + 5) )
 		this.vel.x = -this.vel.x;
-	if ( this.pos.y <  this.radius )
+	if ( this.pos.y < (this.radius + 5) )
 		this.vel.y = -this.vel.y;
-	if ( this.pos.y > G.world.height - this.radius )
+	if ( this.pos.y > G.world.height - (this.radius + 5) )
 		this.vel.y = -this.vel.y;
 
     this.vel = this.vel.m(this.friction);

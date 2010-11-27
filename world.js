@@ -38,13 +38,10 @@ World.prototype.update = function () {
 }
 
 World.prototype.draw = function () {
-    G.context.fillStyle = "rgb(200, 200, 200)";
+    G.context.fillStyle = "rgb(255, 255, 255)";
     G.context.fillRect(0, 0, G.canvas.width, G.canvas.height);
 
-	camera = this.camera;
-	
-	G.context.fillStyle = "rgb(150, 150, 150)";
-    G.context.fillRect((this.width/2 - 10) - camera.x, (this.height/2 - 10) - camera.y, 20, 20);	
+	G.context.drawImage(G.images.world, -G.world.camera.x, -G.world.camera.y);
 
     $.each(this.cells, function(i, c) { c.draw(); });
 }
