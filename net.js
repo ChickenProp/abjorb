@@ -16,16 +16,16 @@ Net.prototype.connect = function () {
 				}
 				G.mainloopfn()
 				G.mainloopfn()
-				conn.send('drawn');
+				conn.send('["drawn"]');
 			} catch (e) {
 			
 			}
 		}
 		clearInterval(G.mainloop);
-		conn.send('join');
+		conn.send('["join"]');
 	}
 }
 
 Net.prototype.go = function () {
-	this.conn.send('go');
+	this.conn.send('["go"]');
 }
