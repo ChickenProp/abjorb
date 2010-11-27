@@ -106,10 +106,10 @@ Cell.prototype.incMass = function (m) {
 }
 
 Cell.prototype.massToRadius = function (mass) {
-	return Math.sqrt(mass);
+	return Math.pow(mass, 1/3);
 }
 Cell.prototype.radiusToMass = function (radius) {
-	return radius * radius;
+	return Math.pow(radius, 3);
 }
 
 Cell.prototype.clickHandler = function (e) {
@@ -121,8 +121,8 @@ Cell.prototype.clickHandler = function (e) {
 
 	var spawn = new Cell();
 
-	spawn.radius = spawn.massToRadius(this.mass()*0.05);
-	var spawnVelRel = direction.m(-3);
+	spawn.radius = spawn.massToRadius(this.mass()*0.01);
+	var spawnVelRel = direction.m(-2);
 
 	this.radius = this.massToRadius(this.mass() - spawn.mass());
 	var thisVelRel = spawnVelRel.m( - spawn.mass() / this.mass() );
