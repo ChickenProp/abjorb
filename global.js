@@ -5,6 +5,8 @@ function Global () {
 
 	this.lowGraphics = false;
 
+	this.time = 0;
+
 	this.images = [];
 	bluecell = new Image();
 	bluecell.src = 'media/blob.png?'+(new Date()).getTime();

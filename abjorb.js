@@ -19,6 +19,8 @@ function abjorb () {
 }
 
 function mainloop () {
-    G.world.update();
-    G.world.draw();
+	G.time++;
+
+	G.world.update();
+	G.world.draw();
 }
