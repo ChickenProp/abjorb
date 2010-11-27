@@ -69,6 +69,11 @@ Cell.prototype.draw = function () {
 			      drawRadius*2,
 			      drawRadius*2);
 	}
+	
+	if (this.name) {
+		ctx.fillStyle = '#ffffff';
+		ctx.fillText(this.name, posScreen.x + this.radius * 2.2, posScreen.y + this.radius * 2.2);
+	}
 }
 
 Cell.prototype.colour = function () {
