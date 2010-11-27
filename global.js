@@ -23,7 +23,9 @@ function Global () {
 	title = new Image();
 	title.src = 'media/title.png?'+(new Date()).getTime();	
 	this.images.title = title;
-	
+	lose = new Image();
+	lose.src = 'media/lose.png?'+(new Date()).getTime();	
+	this.images.lose = lose;
 	this.current = new Title();
 	
 	this.net = new Net();

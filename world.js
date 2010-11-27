@@ -54,9 +54,13 @@ World.prototype.update = function () {
 		if (smallest > this.player.radius)
 				this.likely = false;
 		if (this.player.radius ==0 )
+			G.current = new Lose();
+
+
+		if ( ((cells[cells.length-1]).radius == this.player.radius) && !G.multiplayer)
 			G.current = new Title();
-		console.log(this.player.radius + " " + smallest + " " + this.likely);
 	}
+
 }
 
 World.prototype.draw = function () {
