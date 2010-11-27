@@ -1,11 +1,10 @@
 function World () {
 	this.width = 960;
 	this.height = 720;
-
 	this.cells = [];
 	
 	this.camera = new Camera(G.screenCentre);
-	//this.camera = new Camera($V(0,0));
+	this.likely = true;
 }
 
 World.prototype.addPlayer = function () {
@@ -38,8 +37,8 @@ World.prototype.update = function () {
 	this.camera.update();
 
 	var cells = this.cells.sort(function(cell1, cell2) {
-		var l1 = cell1.pos.x - cell1.radius;
-		var l2 = cell2.pos.x - cell2.radius;
+		var l1 = cell1.radius;
+		var l2 = cell2.radius;
 
 		if (l1 < l2)
 			return -1;
@@ -49,10 +48,15 @@ World.prototype.update = function () {
 			return 0;
 	});
 
-//	var smallest = this.cells[ Math.floor( this.cells.length /10 )].radius;
-//	if (smallest > player.radius)
-//		G.current = new Title();
-
+	if (cells.length > 0)
+	var smallest = (cells[ Math.floor(cells.length /4 )]).radius;
+	if (this.player){
+		if (smallest > this.player.radius)
+				this.likely = false;
+		if (this.player.radius ==0 )
+			G.current = new Title();
+		console.log(this.player.radius + " " + smallest + " " + this.likely);
+	}
 }
 
 World.prototype.draw = function () {
@@ -69,6 +73,9 @@ World.prototype.draw = function () {
 	for (var i = 0; i < this.cells.length; i++) {
 		this.cells[i].draw();
 	}
+	if (this.likely == false)
+		G.context.fillText("DOESN'T LOOK LIKELY", 300, 300);
+
 }
 
 World.prototype.addCell = function (cell) {
