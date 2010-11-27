@@ -117,11 +117,10 @@ World.prototype.handleCollisions = function (collisions) {
 }
 
 World.prototype.clickHandler = function (e){
-console.log(e);
-	var screenLoc = $V(e.offsetX,
-		   e.offsetY);
-	this.camera.screenToWorld(screenLoc)
-	this.player.clickHandler(screenLoc)
+	var screenLoc = $V(e.layerX,
+		   e.layerY);
+
+	this.player.clickHandler(this.camera.screenToWorld(screenLoc))
 }
 
 World.prototype.scrollHandler = function (e){
