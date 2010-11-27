@@ -20,6 +20,9 @@ function Global () {
 	world = new Image();
 	world.src = 'media/bg.png?'+(new Date()).getTime();
 	this.images.world = world;
+	title = new Image();
+	title.src = 'media/title.png?'+(new Date()).getTime();	
+	this.images.title =title;
 	this.current = new Title();
 }
 

@@ -11,7 +11,7 @@ Title.prototype.update = function () {
 
 Title.prototype.draw = function () {
 
-		G.context.drawImage(G.images.world, 0,0);
+		G.context.drawImage(G.images.title, 0,0);
 }
 
 
