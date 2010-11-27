@@ -1,12 +1,18 @@
 function Cell (pos, vel, radius) {
-    this.pos = pos;
-    this.vel = vel;
+	this.pos = pos;
+	this.vel = vel;
 
-    this.radius = radius;
+	this.radius = radius;
+	this.dead = false;
+}
+
+Cell.prototype.kill = function () {
+	this.dead = true;
+	this.radius = 0;
 }
 
 Cell.prototype.update = function () {
-    this.pos = this.pos.a(this.vel);
+	this.pos = this.pos.a(this.vel);
 
 	if ( this.pos.x < this.radius )
 		this.vel.x = -this.vel.x;
@@ -19,42 +25,66 @@ Cell.prototype.update = function () {
 }
 
 Cell.prototype.draw = function () {
-    ctx = G.context;
+	ctx = G.context;
 	
-	ctx.drawImage(G.images.cell, this.pos.x-this.radius, this.pos.y-this.radius, this.radius*2, this.radius*2);
+	ctx.drawImage(G.images.cell, this.pos.x-this.radius,
+		      this.pos.y-this.radius, this.radius*2, this.radius*2);
 }
 
-Cell.prototype.isTouching = function (other) {
-    var radSum = this.radius + other.radius;
-    return radSum * radSum < this.pos.s(other.pos).lengthSquared();
+// Distance between the closest points of two cells. 0 if they are tangent,
+// negative if they are intersecting.
+Cell.prototype.distance = function (other) {
+	return this.pos.s(other.pos).length() - (this.radius + other.radius);
+}
+
+Cell.prototype.absorb = function (other, maxRadius) {
+	var amount = Math.min(other.radiusToMass(maxRadius), 3);
+	if (other.mass() <= amount) {
+		this.incMass(other.mass());
+		other.kill();
+	}
+	else { 
+		this.incMass(amount);
+		other.incMass(-amount);
+	}
 }
 
 Cell.prototype.mass = function () {
-    return this.radius * this.radius;
+	return this.radiusToMass(this.radius);
+}
+
+Cell.prototype.setMass = function (m) {
+	this.radius = this.massToRadius(m);
+}
+Cell.prototype.incMass = function (m) {
+	this.setMass(this.mass() + m);
 }
 
 Cell.prototype.massToRadius = function (mass) {
-    return Math.sqrt(mass);
+	return Math.sqrt(mass);
+}
+Cell.prototype.radiusToMass = function (radius) {
+	return radius * radius;
 }
 
 Cell.prototype.clickHandler = function (e) {
-    var loc = $V(e.pageX - G.canvas.offsetLeft,
-		 e.pageY - G.canvas.offsetTop);
+	var loc = $V(e.pageX - G.canvas.offsetLeft,
+		     e.pageY - G.canvas.offsetTop);
+	
+	var direction = this.pos.s(loc).normalize();
 
-    var direction = this.pos.s(loc).normalize();
+	var spawn = new Cell();
 
-    var spawn = new Cell();
+	spawn.radius = spawn.massToRadius(this.mass()*0.05);
+	var spawnVelRel = direction.m(-3);
 
-    spawn.radius = spawn.massToRadius(this.mass()*0.05);
-    var spawnVelRel = direction.m(-3);
+	this.radius = this.massToRadius(this.mass() - spawn.mass());
+	var thisVelRel = spawnVelRel.m( - spawn.mass() / this.mass() );
 
-    this.radius = this.massToRadius(this.mass() - spawn.mass());
-    var thisVelRel = spawnVelRel.m( - spawn.mass() / this.mass() );
+	spawn.vel = this.vel.a(spawnVelRel);
+	this.vel = this.vel.a(thisVelRel);
 
-    spawn.vel = this.vel.a(spawnVelRel);
-    this.vel = this.vel.a(thisVelRel);
+	spawn.pos = this.pos;
 
-    spawn.pos = this.pos;
-
-    G.world.addCell(spawn);
+	G.world.addCell(spawn);
 }
