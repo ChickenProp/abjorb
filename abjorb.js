@@ -14,6 +14,7 @@ function abjorb () {
 	});
 	$(G.canvas).bind('mousewheel', function (e) {
 		G.current.scrollHandler(e);
+		e.preventDefault();
 	});
 
 	$(G.canvas).css('cursor','crosshair');
