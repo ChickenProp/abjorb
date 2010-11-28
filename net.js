@@ -27,11 +27,14 @@ Net.prototype.connect = function () {
 		conn.onmessage = function(evt) {
 			if (evt.data == 'wait') {
 				net.message = "Waiting for game to finish.";
+				net.message2 = "Click to exit.";
+				net.waiting = true;
 				setTimeout(function () {
 					conn.send('["join", "'+net.name+'"]');
 				}, 1000)
 			} else if (evt.data == 'joined') {
 				net.message = "Game joined. Click to start.";
+				net.waiting = false;
 				net.joined = true;
 			} else if (evt.data == 'win') {
 				net.running = false;
@@ -96,6 +99,11 @@ Net.prototype.clickHandler = function (e) {
 		delete G.net.joined;
 		this.go();
 	}
+	
+	if (this.waiting) {
+		G.net = new Net();
+		G.current = new Title();
+	}
 
 	var screenLoc = $V(e.offsetX, e.offsetY);
 	var loc = G.world.camera.screenToWorld(screenLoc)
@@ -117,14 +125,22 @@ Net.prototype.draw = function () {
 		G.context.fillRect(0, 0, G.canvas.width, G.canvas.height);
 
 		if (!G.lowGraphics) {
-			G.context.drawImage(G.images.world, 0, 0,
+			G.context.drawImage(G.images.world, -50, -50,
 						G.images.world.width,
 						G.images.world.height);
 		}
-		G.context.fillStyle = "rgb(255, 255, 255)";
-		G.context.font = '30px sans-serif';
-		G.context.textAlign = 'center';
-		G.context.fillText(this.message, G.canvas.width/2, G.canvas.height/2);
+		if (this.message) {
+			G.context.fillStyle = "rgb(255, 255, 255)";
+			G.context.font = '30px sans-serif';
+			G.context.textAlign = 'center';
+			G.context.fillText(this.message, G.canvas.width/2, G.canvas.height/2);
+		}
+		if (this.message2) {
+			G.context.fillStyle = "rgb(255, 255, 255)";
+			G.context.font = '20px sans-serif';
+			G.context.textAlign = 'center';
+			G.context.fillText(this.message2, G.canvas.width/2, G.canvas.height/4*3);
+		}
 	}
 }
 

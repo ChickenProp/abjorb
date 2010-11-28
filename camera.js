@@ -21,8 +21,8 @@ Camera.prototype.update = function () {
 
 	var rel = ppos.s(this.pos);
 
-	var margin = 1/4; // relative to screen size
-	var comargin = 1/2 - margin; // relative distance from centre to margin
+	var margin = 1/6; // relative to screen size
+	var comargin = 1/3 - margin; // relative distance from centre to margin
 
 	var wzoom = G.canvas.width / this.zoom;
 	var hzoom = G.canvas.height / this.zoom;
