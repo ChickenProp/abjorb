@@ -2,13 +2,26 @@ function Net() {
 }
 
 Net.prototype.connect = function () {
-	conn = new WebSocket("ws://uwcs.co.uk:8035");
-	this.conn = conn;
+	try {
+		conn = new WebSocket("ws://uwcs.co.uk:8035");
+		this.conn = conn;
+	} catch (e) {
+		net.message = "Connection failed";
+		return;
+	}
 	var netcell = {};
 	var net = this;
 	net.running = false;
+	net.connected = setTimeout(function () {
+		net.reset = true;
+		net.message = "Connection failed.";
+	}, 3000);
 	net.message = "Connecting";
+	G.current = net;
+	G.multiplayer = true;
 	conn.onopen = function(evt) {
+		clearTimeout(net.connected);
+		conn.send('["join"]');
 		conn.onmessage = function(evt) {
 			if (evt.data == 'wait') {
 				net.message = "Waiting for game to finish";
@@ -16,7 +29,8 @@ Net.prototype.connect = function () {
 					conn.send('["join"]');
 				}, 1000)
 			} else if (evt.data == 'joined') {
-				net.message = "Game joined";
+				net.message = "Game joined. Click to start.";
+				net.joined = true;
 			} else {
 				clearInterval(G.mainloop);
 				net.running = true;
@@ -25,7 +39,7 @@ Net.prototype.connect = function () {
 					if (data.length > 0) {
 						data.forEach(function (cell) {
 							if (netcell[cell.cell] === undefined) {
-								if (!cell.player) {
+								if (cell.player !== true) {
 									netcell[cell.cell] = new Cell($V(cell.pos[0], cell.pos[1]), $V(cell.vel[0], cell.vel[1]), cell.rad);
 									if (cell.cell.substring(0,1) == 'p') {
 										netcell[cell.cell].name = 'Player '+ cell.cell.substring(1);
@@ -50,9 +64,6 @@ Net.prototype.connect = function () {
 				}
 			}
 		}
-		G.current = net;
-		G.multiplayer = true;
-		conn.send('["join"]');
 	}
 }
 
@@ -61,12 +72,21 @@ Net.prototype.go = function () {
 }
 
 Net.prototype.clickHandler = function (e) {
+	if (this.reset) {
+		G.net = new Net();
+		G.current = new Title();
+	}
+	
+	if (this.joined) {
+		delete G.net.joined;
+		this.go();
+	}
+
 	var screenLoc = $V(e.offsetX, e.offsetY);
 	var loc = G.world.camera.screenToWorld(screenLoc)
 
-	this.conn.send('["click",'+loc.x+','+loc.y+']');
-	//G.world.clickHander(e);
-
+	if (this.running) 
+		this.conn.send('["click",'+loc.x+','+loc.y+']');
 }
 
 Net.prototype.update = function () {
