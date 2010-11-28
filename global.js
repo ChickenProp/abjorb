@@ -29,6 +29,9 @@ function Global () {
 	singletitle = new Image();
 	singletitle.src = 'media/singletitle.png?'+(new Date()).getTime();	
 	this.images.singletitle = singletitle;
+	win = new Image();
+	win.src = 'media/win.png?'+(new Date()).getTime();	
+	this.images.win = win;
 	this.current = new Title();
 	
 	this.multiplayer = false

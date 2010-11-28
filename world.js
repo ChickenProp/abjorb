@@ -7,8 +7,11 @@ function World () {
 	this.likely = true;
 }
 
-World.prototype.addPlayer = function () {
-	this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 8));
+World.prototype.addPlayer = function (flag) {
+	if (flag == 1)
+		this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 8));
+	else
+		this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 4));
 	this.player.colour = function () { return "pink"; };
 }
 

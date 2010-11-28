@@ -54,7 +54,7 @@ Win.prototype.update = function () {
 
 
 Win.prototype.draw = function () {
-	G.context.drawImage(G.images.lose, 0,0);
+	G.context.drawImage(G.images.win, 0,0);
 }
 
 
@@ -78,12 +78,14 @@ Singletitle.prototype.draw = function () {
 
 Singletitle.prototype.clickHandler = function (e){
 	G.createWorld();
-	G.world.addPlayer();
 	if (e.offsetX < 213) { 
+		G.world.addPlayer(0);
 		G.world.level(0);
 	} else if (e.offsetX > 427){
+		G.world.addPlayer(1);
 		G.world.staticlevel();
 	} else{
+		G.world.addPlayer(0);
 		G.world.level(1);
 	}
 }

@@ -137,7 +137,7 @@ Cell.prototype.clickHandler = function (loc) {
 	var spawn = new Cell();
 
 	spawn.radius = spawn.massToRadius(this.mass()*this.spawnmass);
-	var spawnVelRel = direction.m(-4);
+	var spawnVelRel = direction.m(-1);//was -4
 
 	this.radius = this.massToRadius(this.mass() - spawn.mass());
 	var thisVelRel = spawnVelRel.m( - spawn.mass() / this.mass() );
