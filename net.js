@@ -106,7 +106,7 @@ Net.prototype.lose = function () {
 Net.prototype.clickHandler = function (e) {
 	if (this.reset) {
 		G.net = new Net();
-		G.current = new Title();
+		G.current = new Title(0);
 	} else if (this.joined && !this.running) {
 		this.readyUp();
 	} else if (this.waiting) {
