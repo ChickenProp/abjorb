@@ -49,6 +49,7 @@ Net.prototype.connect = function () {
 				net.running = false;
 				G.net = new Net();
 				G.current = new Lose(1);
+				G.multiplayer = false;
 				G.mainloop = setInterval(G.mainloopfn, 1000/60);
 			} else if (data[0] == 'players') {
 				net.players = data[1];
@@ -98,6 +99,7 @@ Net.prototype.lose = function () {
 	this.running = false;
 	G.net = new Net();
 	G.current = new Lose(2);
+	G.multiplayer = false;
 	G.mainloop = setInterval(G.mainloopfn, 1000/60);
 }
 
@@ -105,11 +107,13 @@ Net.prototype.clickHandler = function (e) {
 	if (this.reset) {
 		G.net = new Net();
 		G.current = new Title(0);
+		G.multiplayer = false;
 	} else if (this.joined && !this.running) {
 		this.readyUp();
 	} else if (this.waiting) {
 		G.net = new Net();
 		G.current = new Title();
+		G.multiplayer = false;
 	} else {
 		var screenLoc = $V(e.offsetX, e.offsetY);
 		var loc = G.world.camera.screenToWorld(screenLoc)
