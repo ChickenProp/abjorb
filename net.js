@@ -6,7 +6,8 @@ Net.prototype.connect = function () {
 		conn = new WebSocket("ws://uwcs.co.uk:8035");
 		this.conn = conn;
 	} catch (e) {
-		net.message = "Connection failed";
+		net.reset = true;
+		net.message = "Connection failed.";
 		return;
 	}
 	var netcell = {};
@@ -25,13 +26,18 @@ Net.prototype.connect = function () {
 		conn.send('["join", "'+net.name+'"]');
 		conn.onmessage = function(evt) {
 			if (evt.data == 'wait') {
-				net.message = "Waiting for game to finish";
+				net.message = "Waiting for game to finish.";
 				setTimeout(function () {
-					conn.send('["join"]');
+					conn.send('["join", "'+net.name+'"]');
 				}, 1000)
 			} else if (evt.data == 'joined') {
 				net.message = "Game joined. Click to start.";
 				net.joined = true;
+			} else if (evt.data == 'win') {
+				net.running = false;
+				net.message = "You win."
+				net.reset = true;
+				G.mainloop = setInterval(G.mainloopfn, 1000/60);
 			} else {
 				clearInterval(G.mainloop);
 				net.running = true;
@@ -70,6 +76,14 @@ Net.prototype.connect = function () {
 
 Net.prototype.go = function () {
 	this.conn.send('["go"]');
+}
+
+Net.prototype.lose = function () {
+	this.conn.send('["lose"]');
+	this.running = false;
+	this.message = "You lose."
+	this.reset = true;
+	G.mainloop = setInterval(G.mainloopfn, 1000/60);
 }
 
 Net.prototype.clickHandler = function (e) {

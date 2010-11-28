@@ -53,8 +53,14 @@ World.prototype.update = function () {
 	if (this.player){
 		if (smallest > this.player.radius)
 				this.likely = false;
-		if (this.player.radius ==0 )
-			G.current = new Lose();
+				
+		if (this.player.radius ==0 ) {
+			if (G.multiplayer) {
+				G.net.lose();
+			} else {
+				G.current = new Lose();
+			}
+		}
 
 
 		if ( ((cells[cells.length-1]).radius == this.player.radius) && !G.multiplayer)
