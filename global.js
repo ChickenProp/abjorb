@@ -7,7 +7,7 @@ function Global () {
 
 	this.time = 0;
 
-	this.images = [];
+	this.images = {};
 	bluecell = new Image();
 	bluecell.src = 'media/cell-blue.png?'+(new Date()).getTime();
 	this.images.bluecell = bluecell;
@@ -17,6 +17,12 @@ function Global () {
 	pinkcell = new Image();
 	pinkcell.src = 'media/cell-green.png?'+(new Date()).getTime();
 	this.images.pinkcell = pinkcell;
+	orangecell = new Image();
+	orangecell.src = 'media/cell-orange.png?'+(new Date()).getTime();
+	this.images.orangecell = orangecell;
+	purplecell = new Image();
+	purplecell.src = 'media/cell-purple.png?'+(new Date()).getTime();
+	this.images.purplecell = purplecell;
 	world = new Image();
 	world.src = 'media/bg3.png?'+(new Date()).getTime();
 	this.images.world = world;
