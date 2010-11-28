@@ -23,9 +23,11 @@ Title.prototype.scrollHandler = function (e){
 }
 
 function Lose () {
+	this.frames = 0;
 }
 
 Lose.prototype.update = function () {
+	this.frames++;
 }
 
 
@@ -35,7 +37,9 @@ Lose.prototype.draw = function () {
 
 
 Lose.prototype.clickHandler = function (e){
-	G.current = new Title();
+	if (this.frames > 60){
+		G.current = new Title();
+	}
 }
 
 Lose.prototype.scrollHandler = function (e){
@@ -73,9 +77,15 @@ Singletitle.prototype.draw = function () {
 }
 
 Singletitle.prototype.clickHandler = function (e){
-		G.createWorld();
-		G.world.addPlayer();
-		G.world.level();
+	G.createWorld();
+	G.world.addPlayer();
+	if (e.offsetX < 213) { 
+		G.world.level(0);
+	} else if (e.offsetX > 427){
+		G.world.level(2);
+	} else{
+		G.world.level(1);
+	}
 }
 
 Singletitle.prototype.scrollHandler = function (e){
