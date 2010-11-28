@@ -27,6 +27,7 @@ Net.prototype.connect = function () {
 			net.name = "Player";
 		conn.send('["join", "'+net.name+'"]');
 		conn.onmessage = function(evt) {
+			console.log(evt.data);
 			try {
 				var data = JSON.parse(evt.data);
 			} catch (e) {
@@ -50,6 +51,7 @@ Net.prototype.connect = function () {
 				net.reset = true;
 				G.mainloop = setInterval(G.mainloopfn, 1000/60);
 			} else if (data[0] == 'players') {
+				console.log(data[1]);
 				net.players = data[1];
 			} else if (data[0] == 'cell') {
 				clearInterval(G.mainloop);
@@ -57,7 +59,7 @@ Net.prototype.connect = function () {
 				data = data[1];
 				if (data.length > 0) {
 					data.forEach(function (cell) {
-						if (netcell[cell.cell] === undefined) {
+						if (netcell[cell.cell] == undefined) {
 							if (cell.player !== true) {
 								netcell[cell.cell] = new Cell($V(cell.pos[0], cell.pos[1]), $V(cell.vel[0], cell.vel[1]), cell.rad);
 								if (cell.name) {
@@ -70,7 +72,6 @@ Net.prototype.connect = function () {
 								G.world.player.colour = function () { return "pink"; };
 							}
 						} else {
-							
 							netcell[cell.cell].clickHandler($V(cell.click[0],cell.click[1]));
 						}
 					});
