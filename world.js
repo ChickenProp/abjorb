@@ -12,6 +12,30 @@ World.prototype.addPlayer = function () {
 	this.player.colour = function () { return "pink"; };
 }
 
+World.prototype.staticlevel = function () {
+	for (i = 0; i < 100; i++) {
+		var x = Math.random()*this.width-40+20;
+		var y = Math.random()*this.height-40+20;
+		var r = 8*Math.random()+4;
+		if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+								 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+			this.addCell(new Cell($V(x,y),
+						  $V(0,0),
+						  r));
+		}
+	}
+	for (i = 0; i < 600; i++) {
+		var x =Math.random()*this.width-40+20;
+		var y = Math.random()*this.height-40+20;
+		var r =  1+3*Math.random();
+		if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+								 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+			this.addCell(new Cell($V(x,y),
+							  $V(0,0),
+							  r));
+		}
+	}
+}
 World.prototype.level = function (flag) {
 	if (flag == 0 ){
 		for (i = 0; i < 50; i++) {
@@ -213,6 +237,11 @@ World.prototype.clickHandler = function (e){
 
 World.prototype.scrollHandler = function (e){
 	this.camera.scrollHandler(e);
+
+}
+
+World.prototype.collisions = function (cell) {
+	for (i = 0; i < this.cells.length ; i++){}
 
 }
 
