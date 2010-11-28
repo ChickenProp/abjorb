@@ -81,7 +81,7 @@ Cell.prototype.colour = function () {
 	if (!this.antimatter)
 		return (G.world.player === undefined || this.radius > G.world.player.radius) ? 'red' : 'blue';
 	else if (this.antimatter)
-		return (G.world.player === undefined || this.radius > G.world.player.radius) ? 'purple' : 'oragne';
+		return (G.world.player === undefined || this.radius > G.world.player.radius) ? 'purple' : 'orange';
 }
 
 Cell.prototype.image = function () {
@@ -140,10 +140,10 @@ Cell.prototype.incMass = function (m) {
 }
 
 Cell.prototype.massToRadius = function (mass) {
-	return Math.pow(mass, 1/3);
+	return Math.pow(mass, 1/2.5);
 }
 Cell.prototype.radiusToMass = function (radius) {
-	return Math.pow(radius, 3);
+	return Math.pow(radius, 2.5);
 }
 
 Cell.prototype.clickHandler = function (loc) {

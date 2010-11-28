@@ -18,35 +18,38 @@ World.prototype.addPlayer = function (flag) {
 World.prototype.staticlevel = function () {
 	for (j = 3 ; j >=0 ; j--){
 
-		for (i = 0; i < 125; i++) {
-			var x = Math.random()*this.width-40+20;
-			var y = Math.random()*this.height-40+20;
-			var r = (8*Math.random()+4)*(j);
-			if(!this.collisions(new Cell($V(x,y),$V(0,0),r,false ))){
-				if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
-										 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
-					this.addCell(new Cell($V(x,y),
-								  $V(0,0),
-								  r,false));
+		for (i = 0; i < 200; i++) {
+			var rand = Math.random()*3;
+			if (rand < 2 ){ 
+				var x = Math.random()*this.width-40+20;
+				var y = Math.random()*this.height-40+20;
+				var r = (8*Math.random()+4)*(j);
+				if(!this.collisions(new Cell($V(x,y),$V(0,0),r,false ))){
+					if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+											 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+						this.addCell(new Cell($V(x,y),
+									  $V(0,0),
+									  r,false));
+					}
 				}
-			}
-		}
-		for (i = 0; i < 75; i++) {
-			var x = Math.random()*this.width-40+20;
-			var y = Math.random()*this.height-40+20;
-			var r = (8*Math.random()+4)*(j);
-			if(!this.collisions(new Cell($V(x,y),$V(0,0),r,false ))){
-				if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
-										 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
-					this.addCell(new Cell($V(x,y),
-								  $V(0,0),
-								  r,false));
+			} else {
+				var x = Math.random()*this.width-40+20;
+				var y = Math.random()*this.height-40+20;
+				var r = (8*Math.random()+4)*(j);
+				if(!this.collisions(new Cell($V(x,y),$V(0,0),r,false ))){
+					if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+											 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+						this.addCell(new Cell($V(x,y),
+									  $V(0,0),
+									  r,true));
+					}
 				}
 			}
 		}
 
 	}
-	for (i = 0; i < 450; i++) {
+	for (i = 0; i < 600; i++) {
+
 		var x =Math.random()*this.width-40+20;
 		var y = Math.random()*this.height-40+20;
 		var r =  3+10*Math.random();
@@ -58,8 +61,9 @@ World.prototype.staticlevel = function () {
 								  r,false));
 			}
 		}
+
 	}
-	for (i = 0; i < 150; i++) {
+/*	for (i = 0; i < 150; i++) {
 		var x =Math.random()*this.width-40+20;
 		var y = Math.random()*this.height-40+20;
 		var r =  3+10*Math.random();
@@ -71,7 +75,7 @@ World.prototype.staticlevel = function () {
 								  r,true));
 			}
 		}
-	}
+	}*/
 }
 
 World.prototype.level = function (flag) {
@@ -96,7 +100,7 @@ World.prototype.level = function (flag) {
 
 				this.addCell(new Cell($V(x, y),
 							  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-							  r,true));
+							  r,false));
 			}
 		}
 	} else 	if (flag == 1 ){
