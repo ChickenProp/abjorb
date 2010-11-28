@@ -11,7 +11,10 @@ Title.prototype.draw = function () {
 
 
 Title.prototype.clickHandler = function (e){
-	G.createWorld();
+	if (e.offsetX < 320)
+		G.current = new Singletitle();
+	else 
+		G.createWorld();
 }
 
 Title.prototype.scrollHandler = function (e){
@@ -56,5 +59,23 @@ Win.prototype.clickHandler = function (e){
 Win.prototype.scrollHandler = function (e){
 }
 
+function Singletitle () {
+}
+
+Singletitle.prototype.update = function () {
+}
+
+
+Singletitle.prototype.draw = function () {
+	G.context.drawImage(G.images.singletitle, 0,0);
+}
+
+
+Singletitle.prototype.clickHandler = function (e){
+		G.createWorld();
+}
+
+Singletitle.prototype.scrollHandler = function (e){
+}
 
 

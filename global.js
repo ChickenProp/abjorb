@@ -26,6 +26,9 @@ function Global () {
 	lose = new Image();
 	lose.src = 'media/lose.png?'+(new Date()).getTime();	
 	this.images.lose = lose;
+	singletitle = new Image();
+	singletitle.src = 'media/singletitle.png?'+(new Date()).getTime();	
+	this.images.singletitle = singletitle;
 	this.current = new Title();
 	
 	this.multiplayer = false
