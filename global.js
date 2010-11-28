@@ -7,7 +7,7 @@ function Global () {
 
 	this.time = 0;
 
-	this.images = [];
+	this.images = {};
 	bluecell = new Image();
 	bluecell.src = 'media/blobsarah2.png?'+(new Date()).getTime();
 	this.images.bluecell = bluecell;
@@ -15,8 +15,14 @@ function Global () {
 	redcell.src = 'media/redblob2.png?'+(new Date()).getTime();
 	this.images.redcell = redcell;
 	pinkcell = new Image();
-	pinkcell.src = 'media/player.png?'+(new Date()).getTime();
+	pinkcell.src = 'media/cell-green.png?'+(new Date()).getTime();
 	this.images.pinkcell = pinkcell;
+	orangecell = new Image();
+	orangecell.src = 'media/cell-orange.png?'+(new Date()).getTime();
+	this.images.orangecell = orangecell;
+	purplecell = new Image();
+	purplecell.src = 'media/cell-purple.png?'+(new Date()).getTime();
+	this.images.purplecell = purplecell;
 	world = new Image();
 	world.src = 'media/bg3.png?'+(new Date()).getTime();
 	this.images.world = world;

@@ -1,4 +1,4 @@
-function Cell (pos, vel, radius) {
+function Cell (pos, vel, radius, antimatter) {
 	this.pos = pos;
 	this.vel = vel;
 
@@ -11,6 +11,7 @@ function Cell (pos, vel, radius) {
 	this.maxspawnmass = this.minspawnmass * Math.pow(this.spawnmassratio,4);
 	this.spawnmass = this.minspawnmass;
 	this.lastspawn = -Infinity;
+	this.antimatter = antimatter;
 }
 
 Cell.prototype.kill = function () {
@@ -77,7 +78,10 @@ Cell.prototype.draw = function () {
 }
 
 Cell.prototype.colour = function () {
-	return (G.world.player === undefined || this.radius > G.world.player.radius) ? 'red' : 'blue';
+	if (!this.antimatter)
+		return (G.world.player === undefined || this.radius > G.world.player.radius) ? 'red' : 'blue';
+	else if (this.antimatter)
+		return (G.world.player === undefined || this.radius > G.world.player.radius) ? 'purple' : 'oragne';
 }
 
 Cell.prototype.image = function () {
@@ -93,21 +97,35 @@ Cell.prototype.distance = function (other) {
 Cell.prototype.absorb = function (other, maxRadius) {
 	if (other.dead)
 		return;
+	if ((!this.antimatter && !other.antimatter) || (this.antimatter && other.antimatter) ){
+		var amount = other.radiusToMass(maxRadius);
+		var momentum;
+		if (other.mass() <= amount) {
+			momentum = other.vel.m(other.mass());
+			this.incMass(other.mass());
+			other.kill();
+		}
+		else {
+			momentum = other.vel.m(amount);
+			this.incMass(amount);
+			other.incMass(-amount);
+		}
 
-	var amount = other.radiusToMass(maxRadius);
-	var momentum;
-	if (other.mass() <= amount) {
-		momentum = other.vel.m(other.mass());
-		this.incMass(other.mass());
-		other.kill();
+		this.vel = this.vel.a(momentum.d(this.mass()));
+	} else {
+		var amount = other.radiusToMass(maxRadius);
+		var momentum;
+		if (other.mass() <= amount) {
+			momentum = other.vel.m(other.mass());
+			this.incMass(-other.mass());
+			other.kill();
+		}
+		else {
+			momentum = other.vel.m(amount);
+			this.incMass(-amount);
+			other.incMass(-amount);
+		}
 	}
-	else {
-		momentum = other.vel.m(amount);
-		this.incMass(amount);
-		other.incMass(-amount);
-	}
-
-	this.vel = this.vel.a(momentum.d(this.mass()));
 }
 
 Cell.prototype.mass = function () {
