@@ -27,7 +27,6 @@ Net.prototype.connect = function () {
 			net.name = "Player";
 		conn.send('["join", "'+net.name+'"]');
 		conn.onmessage = function(evt) {
-			console.log(evt.data);
 			try {
 				var data = JSON.parse(evt.data);
 			} catch (e) {
@@ -43,17 +42,19 @@ Net.prototype.connect = function () {
 			} else if (data[0] == 'joined') {
 				net.waiting = false;
 				net.joined = true;
+				net.joinScreen = true;
 				net.ready = false;
 				net.players = [];
 			} else if (data[0] == 'win') {
 				net.running = false;
 				net.message = "You win."
+				net.message2 = "Click for menu."
 				net.reset = true;
 				G.mainloop = setInterval(G.mainloopfn, 1000/60);
 			} else if (data[0] == 'players') {
-				console.log(data[1]);
 				net.players = data[1];
 			} else if (data[0] == 'cell') {
+				net.joinScreen = false;
 				clearInterval(G.mainloop);
 				net.running = true;
 				data = data[1];
@@ -97,6 +98,7 @@ Net.prototype.lose = function () {
 	this.conn.send('["lose"]');
 	this.running = false;
 	this.message = "You lose."
+	this.message2 = "Click for menu."
 	this.reset = true;
 	G.mainloop = setInterval(G.mainloopfn, 1000/60);
 }
@@ -136,7 +138,7 @@ Net.prototype.draw = function () {
 						G.images.world.width,
 						G.images.world.height);
 		}
-		if (this.joined) {
+		if (this.joinScreen) {
 			G.context.fillStyle = "rgb(255, 255, 255)";
 			G.context.font = '30px sans-serif';
 			G.context.textAlign = 'center';
@@ -147,6 +149,18 @@ Net.prototype.draw = function () {
 				G.context.textAlign = 'center';
 				G.context.fillText("Click to ready.", G.canvas.width/2, G.canvas.height/8*7);
 			}
+			var offset = G.canvas.height/8*2;
+			this.players.forEach(function (player) {
+				G.context.fillStyle = "rgb(255, 255, 255)";
+				G.context.font = '15px sans-serif';
+				G.context.textAlign = 'center';
+				var text = player[0];
+				if (player[1]) {
+					text += ' - Ready';
+				}
+				G.context.fillText(text, G.canvas.width/2, offset);
+				offset += 20;
+			});
 		} else {
 			if (this.message) {
 				G.context.fillStyle = "rgb(255, 255, 255)";
