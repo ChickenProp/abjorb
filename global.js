@@ -9,10 +9,10 @@ function Global () {
 
 	this.images = {};
 	bluecell = new Image();
-	bluecell.src = 'media/blobsarah2.png?'+(new Date()).getTime();
+	bluecell.src = 'media/cell-blue.png?'+(new Date()).getTime();
 	this.images.bluecell = bluecell;
 	redcell = new Image();
-	redcell.src = 'media/redblob2.png?'+(new Date()).getTime();
+	redcell.src = 'media/cell-red.png?'+(new Date()).getTime();
 	this.images.redcell = redcell;
 	pinkcell = new Image();
 	pinkcell.src = 'media/cell-green.png?'+(new Date()).getTime();
