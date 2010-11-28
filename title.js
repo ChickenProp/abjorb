@@ -83,7 +83,7 @@ Singletitle.prototype.clickHandler = function (e){
 		G.world.level(0);
 	} else if (e.offsetX > 427){
 		G.world.addPlayer(1);
-		G.world.staticlevel();
+		G.world.staticlevel(2);
 	} else{
 		G.world.addPlayer(0);
 		G.world.level(1);
