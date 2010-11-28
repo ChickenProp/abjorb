@@ -21,18 +21,18 @@ Cell.prototype.kill = function () {
 Cell.prototype.update = function () {
 	this.pos = this.pos.a(this.vel);
 
-	if ( this.pos.x < (this.radius + 5)) {
+	if ( this.pos.x < (this.radius + 11)) {
 		this.vel.x = -this.vel.x;
-		this.pos.x = (this.radius + 5);
-	} if ( this.pos.x > G.world.width - (this.radius + 5) ) {
+		this.pos.x = (this.radius + 11);
+	} if ( this.pos.x > G.world.width - (this.radius + 11) ) {
 		this.vel.x = -this.vel.x;
-		this.pos.x = G.world.width - (this.radius + 5);
-	} if ( this.pos.y < (this.radius + 5) ) {
+		this.pos.x = G.world.width - (this.radius + 11);
+	} if ( this.pos.y < (this.radius + 11) ) {
 		this.vel.y = -this.vel.y;
-		this.pos.y = (this.radius + 5);
-	} if ( this.pos.y > G.world.height - (this.radius + 5) ) {
+		this.pos.y = (this.radius + 11);
+	} if ( this.pos.y > G.world.height - (this.radius + 11) ) {
 		this.vel.y = -this.vel.y;
-		this.pos.y = G.world.height - (this.radius + 5);
+		this.pos.y = G.world.height - (this.radius + 11);
 	}
 
 	if (this.lastspawn <= G.time - 10) {
@@ -62,7 +62,7 @@ Cell.prototype.draw = function () {
 	}
 	else {
 		// 75/57 is because the image is stupid-sized.
-		var drawRadius = zoomrad * 75/57;
+		var drawRadius = zoomrad * 75/62;
 		ctx.drawImage(this.image(),
 			      posScreen.x - drawRadius,
 			      posScreen.y - drawRadius,

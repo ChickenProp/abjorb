@@ -176,9 +176,12 @@ World.prototype.draw = function () {
 	for (var i = 0; i < this.cells.length; i++) {
 		this.cells[i].draw();
 	}
-	if (this.likely == false)
-		G.context.fillText("DOESN'T LOOK LIKELY", 300, 300);
-
+	if (this.likely == false) {
+		G.context.fillStyle = "rgb(255, 255, 255)";
+		G.context.font = '30px sans-serif';
+		G.context.textAlign = 'center';
+		G.context.fillText("DOESN'T LOOK LIKELY", G.canvas.width/2, G.canvas.height/5*4);
+	}
 }
 
 World.prototype.addCell = function (cell) {
