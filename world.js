@@ -12,18 +12,46 @@ World.prototype.addPlayer = function () {
 	this.player.colour = function () { return "pink"; };
 }
 
-World.prototype.level = function () {
-	for (i = 0; i < 100; i++) {
-		this.addCell(new Cell($V((Math.random()*this.width-40)+20,
-					 (Math.random()*this.height-40)+20),
-				      $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-				      6*Math.random()+6));
-	}
-	for (i = 0; i < 1000; i++) {
-		this.addCell(new Cell($V((Math.random()*this.width-40)+20,
-					 (Math.random()*this.height-40)+20),
-				      $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-				      4*Math.random()));
+World.prototype.level = function (flag) {
+	if (flag == 0 ){
+		for (i = 0; i < 50; i++) {
+			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
+						 (Math.random()*this.height-40)+20),
+						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+						  6*Math.random()+6));
+		}
+		for (i = 0; i < 1000; i++) {
+			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
+						 (Math.random()*this.height-40)+20),
+						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+						  1+4*Math.random()));
+		}
+	} else 	if (flag == 1 ){
+		for (i = 0; i < 100; i++) {
+			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
+						 (Math.random()*this.height-40)+20),
+						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+						  6*Math.random()+6));
+		}
+		for (i = 0; i < 1000; i++) {
+			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
+						 (Math.random()*this.height-40)+20),
+						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+						  4*Math.random()));
+		}
+	}else if (flag == 2){
+		for (i = 0; i < 200; i++) {
+			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
+						 (Math.random()*this.height-40)+20),
+						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+						  6*Math.random()+6));
+		}
+		for (i = 0; i < 600; i++) {
+			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
+						 (Math.random()*this.height-40)+20),
+						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+						  4*Math.random()));
+		}
 	}
 }
 
