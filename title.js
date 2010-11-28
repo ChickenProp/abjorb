@@ -24,6 +24,7 @@ Title.prototype.draw = function () {
 		G.context.textAlign = 'center';
 		G.context.fillText("SINGLE PLAYER", G.canvas.width/2,250);
 		G.context.fillText("MULTI PLAYER", G.canvas.width/2,350);
+		G.context.drawImage(G.images.splash,G.canvas.width - 96  ,G.canvas.height - 96 );
 	} else if (this.mode ==1) {
 		G.context.drawImage(G.images.button,G.canvas.width/2-275 ,250,150,50);
 		G.context.drawImage(G.images.button,G.canvas.width/2-75 ,250,150,50);
@@ -51,7 +52,6 @@ Title.prototype.draw = function () {
 		G.context.textAlign = 'center';
 		G.context.fillText("MENU", 75,43);
 	}
-	G.context.drawImage(G.images.splash,G.canvas.width - 96  ,G.canvas.height - 96 );
 }
 
 
