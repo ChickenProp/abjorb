@@ -20,7 +20,7 @@
 	<script src="jquery.disable.text.select.js"></script>
 	<script type="text/javascript" >
 		$(function () {
-			$(window).disableTextSelect();
+			$('#box').disableTextSelect();
 		});
 	</script>
     <script type="text/javascript" src="vector.js"></script>
@@ -33,7 +33,7 @@
 	<script type="text/javascript" src="net.js"></script>
   </head>  
   <body onload="abjorb()" style="background-color: #000">  
-    <div style="margin: 20px auto; border: 5px solid #000; width: 640px">
+    <div id="box" style="margin: 20px auto; border: 5px solid #000; width: 640px">
 		<canvas id="canvas" width="640" height="480"></canvas>  
 	</div>
   </body>  
