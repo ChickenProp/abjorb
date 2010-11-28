@@ -14,11 +14,16 @@ World.prototype.addPlayer = function (flag) {
 		this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 4),false);
 	this.player.colour = function () { return "pink"; };
 }
+World.prototype.addFakePlayer = function () {
 
-World.prototype.staticlevel = function () {
+	this.player = new Cell($V(320, 240), $V(0, 0), 4);
+	this.player.colour = function () { return "pink"; };
+}
+
+World.prototype.staticlevel = function (flag) {
 	for (j = 3 ; j >=0 ; j--){
 
-		for (i = 0; i < 200; i++) {
+		for (i = 0; i < 100 + flag * 50; i++) {
 			var rand = Math.random()*3;
 			if (rand < 2 ){ 
 				var x = Math.random()*this.width-40+20;
@@ -48,7 +53,7 @@ World.prototype.staticlevel = function () {
 		}
 
 	}
-	for (i = 0; i < 600; i++) {
+	for (i = 0; i < 1000 -(flag*200); i++) {
 
 		var x =Math.random()*this.width-40+20;
 		var y = Math.random()*this.height-40+20;
@@ -63,19 +68,6 @@ World.prototype.staticlevel = function () {
 		}
 
 	}
-/*	for (i = 0; i < 150; i++) {
-		var x =Math.random()*this.width-40+20;
-		var y = Math.random()*this.height-40+20;
-		var r =  3+10*Math.random();
-		if(!this.collisions(new Cell($V(x,y),$V(0,0),r ,false))){
-			if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
-									 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
-				this.addCell(new Cell($V(x,y),
-								  $V(0,0),
-								  r,true));
-			}
-		}
-	}*/
 }
 
 World.prototype.level = function (flag) {
