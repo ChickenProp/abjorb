@@ -37,4 +37,24 @@ Lose.prototype.scrollHandler = function (e){
 }
 
 
+function Win () {
+}
+
+Win.prototype.update = function () {
+}
+
+
+Win.prototype.draw = function () {
+	G.context.drawImage(G.images.lose, 0,0);
+}
+
+
+Win.prototype.clickHandler = function (e){
+	G.current = new Title();
+}
+
+Win.prototype.scrollHandler = function (e){
+}
+
+
 
