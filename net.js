@@ -129,5 +129,6 @@ Net.prototype.draw = function () {
 }
 
 Net.prototype.scrollHandler = function (e) {
-	G.world.scrollHandler(e);
+	if (this.running)
+		G.world.scrollHandler(e);
 }
