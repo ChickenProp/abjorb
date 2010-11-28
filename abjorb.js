@@ -4,8 +4,8 @@ var player;
 
 function abjorb () {
 	G = new Global();
-//	G.createWorld();
-	G.current;
+	G.createTitle();
+
 	G.mainloopfn = mainloop;
 	G.mainloop = setInterval(G.mainloopfn, 1000/60);
 

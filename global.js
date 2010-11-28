@@ -38,7 +38,10 @@ function Global () {
 	win = new Image();
 	win.src = 'media/win.png?'+(new Date()).getTime();	
 	this.images.win = win;
-	this.current = new Title();
+	button = new Image();
+	button.src = 'media/button.png?'+(new Date()).getTime();	
+	this.images.button = button;
+
 	
 	this.multiplayer = false
 	this.net = new Net();
@@ -47,4 +50,10 @@ function Global () {
 Global.prototype.createWorld = function () {
 	this.world = new World();
 	this.current = this.world;
+}
+
+
+Global.prototype.createTitle = function () {
+	this.title = new Title(0);
+	this.current = this.title;
 }

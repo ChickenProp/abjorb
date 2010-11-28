@@ -125,6 +125,7 @@ Cell.prototype.absorb = function (other, maxRadius) {
 			this.incMass(-amount);
 			other.incMass(-amount);
 		}
+	this.vel = this.vel.a(momentum.d(this.mass()));
 	}
 }
 

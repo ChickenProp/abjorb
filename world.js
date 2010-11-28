@@ -14,6 +14,11 @@ World.prototype.addPlayer = function (flag) {
 		this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 4),false);
 	this.player.colour = function () { return "pink"; };
 }
+World.prototype.addFakePlayer = function () {
+
+	this.player = new Cell($V(320, 240), $V(0, 0), 4);
+	this.player.colour = function () { return "pink"; };
+}
 
 World.prototype.staticlevel = function (flag) {
 	for (j = 3 ; j >=0 ; j--){
@@ -48,7 +53,7 @@ World.prototype.staticlevel = function (flag) {
 		}
 
 	}
-	for (i = 0; i < 800 -(flag*100); i++) {
+	for (i = 0; i < 1000 -(flag*200); i++) {
 
 		var x =Math.random()*this.width-40+20;
 		var y = Math.random()*this.height-40+20;
