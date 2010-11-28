@@ -24,7 +24,7 @@ function Global () {
 	purplecell.src = 'media/cell-purple.png?'+(new Date()).getTime();
 	this.images.purplecell = purplecell;
 	world = new Image();
-	world.src = 'media/bg3.png?'+(new Date()).getTime();
+	world.src = 'media/background.png?'+(new Date()).getTime();
 	this.images.world = world;
 	title = new Image();
 	title.src = 'media/title.png?'+(new Date()).getTime();	

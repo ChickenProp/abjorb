@@ -23,58 +23,69 @@ Net.prototype.connect = function () {
 	conn.onopen = function(evt) {
 		clearTimeout(net.connected);
 		net.name = prompt("Enter a name:");
+		if (net.name.length < 1)
+			net.name = "Player";
 		conn.send('["join", "'+net.name+'"]');
 		conn.onmessage = function(evt) {
-			if (evt.data == 'wait') {
+			try {
+				var data = JSON.parse(evt.data);
+			} catch (e) {
+				return;
+			}
+			if (data[0] == 'wait') {
 				net.message = "Waiting for game to finish.";
 				net.message2 = "Click to exit.";
 				net.waiting = true;
 				setTimeout(function () {
 					conn.send('["join", "'+net.name+'"]');
 				}, 1000)
-			} else if (evt.data == 'joined') {
-				net.message = "Game joined. Click to start.";
+			} else if (data[0] == 'joined') {
 				net.waiting = false;
 				net.joined = true;
-			} else if (evt.data == 'win') {
+				net.ready = false;
+				net.players = [];
+			} else if (data[0] == 'win') {
 				net.running = false;
 				net.message = "You win."
 				net.reset = true;
 				G.mainloop = setInterval(G.mainloopfn, 1000/60);
-			} else {
+			} else if (data[0] == 'players') {
+				net.players = data[1];
+			} else if (data[0] == 'cell') {
 				clearInterval(G.mainloop);
 				net.running = true;
-				try {
-					var data = JSON.parse(evt.data);
-					if (data.length > 0) {
-						data.forEach(function (cell) {
-							if (netcell[cell.cell] === undefined) {
-								if (cell.player !== true) {
-									netcell[cell.cell] = new Cell($V(cell.pos[0], cell.pos[1]), $V(cell.vel[0], cell.vel[1]), cell.rad);
-									if (cell.name) {
-										netcell[cell.cell].name = cell.name;
-									}
-									G.world.addCell(netcell[cell.cell]);
-								} else {
-									netcell[cell.cell] = new Cell($V(cell.pos[0], cell.pos[1]), $V(cell.vel[0], cell.vel[1]), cell.rad)
-									G.world.player = G.world.addCell(netcell[cell.cell]);
-									G.world.player.colour = function () { return "pink"; };
+				data = data[1];
+				if (data.length > 0) {
+					data.forEach(function (cell) {
+						if (netcell[cell.cell] === undefined) {
+							if (cell.player !== true) {
+								netcell[cell.cell] = new Cell($V(cell.pos[0], cell.pos[1]), $V(cell.vel[0], cell.vel[1]), cell.rad);
+								if (cell.name) {
+									netcell[cell.cell].name = cell.name;
 								}
+								G.world.addCell(netcell[cell.cell]);
 							} else {
-								
-								netcell[cell.cell].clickHandler($V(cell.click[0],cell.click[1]));
+								netcell[cell.cell] = new Cell($V(cell.pos[0], cell.pos[1]), $V(cell.vel[0], cell.vel[1]), cell.rad)
+								G.world.player = G.world.addCell(netcell[cell.cell]);
+								G.world.player.colour = function () { return "pink"; };
 							}
-						});
-					}
-					G.mainloopfn()
-					G.mainloopfn()
-					conn.send('["drawn"]');
-				} catch (e) {
-				
+						} else {
+							
+							netcell[cell.cell].clickHandler($V(cell.click[0],cell.click[1]));
+						}
+					});
 				}
+				G.mainloopfn()
+				G.mainloopfn()
+				conn.send('["drawn"]');
 			}
 		}
 	}
+}
+
+Net.prototype.readyUp = function () {
+	this.conn.send('["ready"]');
+	this.ready = true;
 }
 
 Net.prototype.go = function () {
@@ -93,23 +104,18 @@ Net.prototype.clickHandler = function (e) {
 	if (this.reset) {
 		G.net = new Net();
 		G.current = new Title();
-	}
-	
-	if (this.joined) {
-		delete G.net.joined;
-		this.go();
-	}
-	
-	if (this.waiting) {
+	} else if (this.joined && !this.running) {
+		this.readyUp();
+	} else if (this.waiting) {
 		G.net = new Net();
 		G.current = new Title();
+	} else {
+		var screenLoc = $V(e.offsetX, e.offsetY);
+		var loc = G.world.camera.screenToWorld(screenLoc)
+
+		if (this.running) 
+			this.conn.send('["click",'+loc.x+','+loc.y+']');
 	}
-
-	var screenLoc = $V(e.offsetX, e.offsetY);
-	var loc = G.world.camera.screenToWorld(screenLoc)
-
-	if (this.running) 
-		this.conn.send('["click",'+loc.x+','+loc.y+']');
 }
 
 Net.prototype.update = function () {
@@ -129,17 +135,30 @@ Net.prototype.draw = function () {
 						G.images.world.width,
 						G.images.world.height);
 		}
-		if (this.message) {
+		if (this.joined) {
 			G.context.fillStyle = "rgb(255, 255, 255)";
 			G.context.font = '30px sans-serif';
 			G.context.textAlign = 'center';
-			G.context.fillText(this.message, G.canvas.width/2, G.canvas.height/2);
-		}
-		if (this.message2) {
-			G.context.fillStyle = "rgb(255, 255, 255)";
-			G.context.font = '20px sans-serif';
-			G.context.textAlign = 'center';
-			G.context.fillText(this.message2, G.canvas.width/2, G.canvas.height/4*3);
+			G.context.fillText("Game joined", G.canvas.width/2, G.canvas.height/8*1);
+			if (!this.ready) {
+				G.context.fillStyle = "rgb(255, 255, 255)";
+				G.context.font = '20px sans-serif';
+				G.context.textAlign = 'center';
+				G.context.fillText("Click to ready.", G.canvas.width/2, G.canvas.height/8*7);
+			}
+		} else {
+			if (this.message) {
+				G.context.fillStyle = "rgb(255, 255, 255)";
+				G.context.font = '30px sans-serif';
+				G.context.textAlign = 'center';
+				G.context.fillText(this.message, G.canvas.width/2, G.canvas.height/2);
+			}
+			if (this.message2) {
+				G.context.fillStyle = "rgb(255, 255, 255)";
+				G.context.font = '20px sans-serif';
+				G.context.textAlign = 'center';
+				G.context.fillText(this.message2, G.canvas.width/2, G.canvas.height/4*3);
+			}
 		}
 	}
 }
