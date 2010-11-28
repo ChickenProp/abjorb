@@ -6,15 +6,20 @@ Net.prototype.connect = function () {
 	this.conn = conn;
 	var netcell = {};
 	var net = this;
+	net.running = false;
+	net.message = "Connecting";
 	conn.onopen = function(evt) {
 		conn.onmessage = function(evt) {
 			if (evt.data == 'wait') {
+				net.message = "Waiting for game to finish";
 				setTimeout(function () {
 					conn.send('["join"]');
 				}, 1000)
 			} else if (evt.data == 'joined') {
-				alert("Joined game");
+				net.message = "Game joined";
 			} else {
+				clearInterval(G.mainloop);
+				net.running = true;
 				try {
 					var data = JSON.parse(evt.data);
 					if (data.length > 0) {
@@ -45,7 +50,6 @@ Net.prototype.connect = function () {
 				}
 			}
 		}
-		clearInterval(G.mainloop);
 		G.current = net;
 		G.multiplayer = true;
 		conn.send('["join"]');
@@ -66,11 +70,27 @@ Net.prototype.clickHandler = function (e) {
 }
 
 Net.prototype.update = function () {
-	G.world.update()
+	if (this.running)
+		G.world.update()
 }
 
 Net.prototype.draw = function () {
-	G.world.draw()
+	if (this.running) {
+		G.world.draw()
+	} else {
+		G.context.fillStyle = "rgb(255, 255, 255)";
+		G.context.fillRect(0, 0, G.canvas.width, G.canvas.height);
+
+		if (!G.lowGraphics) {
+			G.context.drawImage(G.images.world, 0, 0,
+						G.images.world.width,
+						G.images.world.height);
+		}
+		G.context.fillStyle = "rgb(255, 255, 255)";
+		G.context.font = '30px sans-serif';
+		G.context.textAlign = 'center';
+		G.context.fillText(this.message, G.canvas.width/2, G.canvas.height/2);
+	}
 }
 
 Net.prototype.scrollHandler = function (e) {

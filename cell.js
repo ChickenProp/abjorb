@@ -72,7 +72,7 @@ Cell.prototype.draw = function () {
 	
 	if (this.name) {
 		ctx.fillStyle = '#ffffff';
-		ctx.fillText(this.name, posScreen.x + this.radius * 2.2, posScreen.y + this.radius * 2.2);
+		ctx.fillText(this.name, posScreen.x + this.radius * 1.2, posScreen.y + this.radius * 1.2);
 	}
 }
 
