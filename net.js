@@ -21,7 +21,8 @@ Net.prototype.connect = function () {
 	G.multiplayer = true;
 	conn.onopen = function(evt) {
 		clearTimeout(net.connected);
-		conn.send('["join"]');
+		net.name = prompt("Enter a name:");
+		conn.send('["join", "'+net.name+'"]');
 		conn.onmessage = function(evt) {
 			if (evt.data == 'wait') {
 				net.message = "Waiting for game to finish";
@@ -41,8 +42,8 @@ Net.prototype.connect = function () {
 							if (netcell[cell.cell] === undefined) {
 								if (cell.player !== true) {
 									netcell[cell.cell] = new Cell($V(cell.pos[0], cell.pos[1]), $V(cell.vel[0], cell.vel[1]), cell.rad);
-									if (cell.cell.substring(0,1) == 'p') {
-										netcell[cell.cell].name = 'Player '+ cell.cell.substring(1);
+									if (cell.name) {
+										netcell[cell.cell].name = cell.name;
 									}
 									G.world.addCell(netcell[cell.cell]);
 								} else {
