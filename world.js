@@ -15,42 +15,73 @@ World.prototype.addPlayer = function () {
 World.prototype.level = function (flag) {
 	if (flag == 0 ){
 		for (i = 0; i < 50; i++) {
-			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
-						 (Math.random()*this.height-40)+20),
+			var x =Math.random()*this.width-40+20;
+			var y = Math.random()*this.height-40+20;
+			var r =  6*Math.random()+6;
+			if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+									 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+				this.addCell(new Cell($V(x,y),
 						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-						  6*Math.random()+6));
+						 r));
+			}
 		}
-		for (i = 0; i < 1000; i++) {
-			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
-						 (Math.random()*this.height-40)+20),
-						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-						  1+4*Math.random()));
+		for (i = 0; i < 1000; i++) {	
+			var x =Math.random()*this.width-40+20;
+			var y = Math.random()*this.height-40+20;
+			var r =  1+3*Math.random();
+			if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+									 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+
+				this.addCell(new Cell($V(x, y),
+							  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+							  r));
+			}
 		}
 	} else 	if (flag == 1 ){
 		for (i = 0; i < 100; i++) {
-			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
-						 (Math.random()*this.height-40)+20),
-						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-						  6*Math.random()+6));
+			var x = Math.random()*this.width-40+20;
+			var y = Math.random()*this.height-40+20;
+			var r =  6*Math.random()+6;
+			if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+									 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+				this.addCell(new Cell($V(x,y),
+							  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+							 r));
+			}
 		}
 		for (i = 0; i < 1000; i++) {
-			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
-						 (Math.random()*this.height-40)+20),
-						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-						  4*Math.random()));
+			var x =Math.random()*this.width-40+20;
+			var y = Math.random()*this.height-40+20;
+			var r =  1+3*Math.random();
+			if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+									 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+				this.addCell(new Cell($V(x,y),
+							  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+							 r));
+			}
 		}
 	}else if (flag == 2){
-		for (i = 0; i < 200; i++) {
-			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
-						 (Math.random()*this.height-40)+20),
-						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-						  6*Math.random()+6));
+		for (i = 0; i < 300; i++) {
+			var x = Math.random()*this.width-40+20;
+			var y = Math.random()*this.height-40+20;
+			var r = 8*Math.random()+4;
+			if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+									 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+				this.addCell(new Cell($V(x,y),
+							  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+							  r));
+			}
 		}
 		for (i = 0; i < 600; i++) {
-			this.addCell(new Cell($V((Math.random()*this.width-40)+20,
-						 (Math.random()*this.height-40)+20),
-						  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
-						  4*Math.random()));
+			var x =Math.random()*this.width-40+20;
+			var y = Math.random()*this.height-40+20;
+			var r =  1+3*Math.random();
+			if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+									 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+				this.addCell(new Cell($V(x,y),
+								  $V(0.1*(Math.random()-0.5), 0.1*(Math.random()-0.5)),
+								  r));
+			}
 		}
 	}
 }
