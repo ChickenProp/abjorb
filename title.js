@@ -51,6 +51,7 @@ Title.prototype.draw = function () {
 		G.context.textAlign = 'center';
 		G.context.fillText("MENU", 75,43);
 	}
+	G.context.drawImage(G.images.splash,G.canvas.width - 96  ,G.canvas.height - 96 );
 }
 
 
@@ -206,5 +207,4 @@ Singletitle.prototype.clickHandler = function (e){
 
 Singletitle.prototype.scrollHandler = function (e){
 }
-
 

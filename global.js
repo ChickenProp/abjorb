@@ -26,22 +26,12 @@ function Global () {
 	world = new Image();
 	world.src = 'media/background.png?'+(new Date()).getTime();
 	this.images.world = world;
-	title = new Image();
-	title.src = 'media/title.png?'+(new Date()).getTime();	
-	this.images.title = title;
-	lose = new Image();
-	lose.src = 'media/lose.png?'+(new Date()).getTime();	
-	this.images.lose = lose;
-	singletitle = new Image();
-	singletitle.src = 'media/singletitle.png?'+(new Date()).getTime();	
-	this.images.singletitle = singletitle;
-	win = new Image();
-	win.src = 'media/win.png?'+(new Date()).getTime();	
-	this.images.win = win;
 	button = new Image();
 	button.src = 'media/button.png?'+(new Date()).getTime();	
 	this.images.button = button;
-
+	splash = new Image();
+	splash.src = 'media/logo.png?'+(new Date()).getTime();	
+	this.images.splash = splash;
 	
 	this.multiplayer = false
 	this.net = new Net();

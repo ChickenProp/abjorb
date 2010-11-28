@@ -18,11 +18,11 @@ World.prototype.addPlayer = function (flag) {
 World.prototype.addFakePlayer = function (flag) {
 
 	if (flag == 0)
-		this.player = new Cell($V(1000, 1000), $V(0, 0), 4 );
+		this.player = new Cell($V(320, 240), $V(0, 0), 4 );
 	else if (flag == 1)	
-		this.player = new Cell($V(1000, 1000), $V(0, 0), 100 );
+		this.player = new Cell($V(1000, 240), $V(0, 0), 100 );
 	else if (flag == 2)	
-		this.player = new Cell($V(1000, 1000), $V(0, 0), 0 );
+		this.player = new Cell($V(1000, 240), $V(0, 0), 0 );
 	this.player.colour = function () { return "pink"; };
 	this.fake = true;
 }
