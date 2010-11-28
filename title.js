@@ -123,17 +123,30 @@ Title.prototype.clickHandler = function (e){
 Title.prototype.scrollHandler = function (e){
 }
 
-function Lose () {
+function Lose (mode) {
+	this.mode = mode;
 	this.frames = 0;
+	G.world = new World();
+	G.world.addFakePlayer(mode);
+	G.world.level(0);
 }
 
 Lose.prototype.update = function () {
 	this.frames++;
+		G.world.update();
 }
 
 
 Lose.prototype.draw = function () {
-	G.context.drawImage(G.images.lose, 0,0);
+	G.world.draw();
+	G.context.fillStyle = "yellow";
+	G.context.font = '100px sans-serif';
+	G.context.textAlign = 'center';
+	if (this.mode ==1)
+		G.context.fillText("YOU WIN", G.canvas.width/2,150);
+	if (this.mode ==2)
+		G.context.fillText("YOU LOSE", G.canvas.width/2,150);
+
 }
 
 

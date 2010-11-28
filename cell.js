@@ -6,7 +6,7 @@ function Cell (pos, vel, radius, antimatter) {
 	this.dead = false;
 	
 	// This is a ratio of current mass.
-	this.minspawnmass = 0.05;
+	this.minspawnmass = 0.025;
 	this.spawnmassratio = 1.3;
 	this.maxspawnmass = this.minspawnmass * Math.pow(this.spawnmassratio,4);
 	this.spawnmass = this.minspawnmass;
@@ -156,7 +156,7 @@ Cell.prototype.clickHandler = function (loc) {
 	var spawn = new Cell();
 
 	spawn.radius = spawn.massToRadius(this.mass()*this.spawnmass);
-	var spawnVelRel = direction.m(-1);//was -4
+	var spawnVelRel = direction.m(-2);//was -4
 
 	this.radius = this.massToRadius(this.mass() - spawn.mass());
 	var thisVelRel = spawnVelRel.m( - spawn.mass() / this.mass() );

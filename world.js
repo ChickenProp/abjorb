@@ -13,11 +13,18 @@ World.prototype.addPlayer = function (flag) {
 	else
 		this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 4),false);
 	this.player.colour = function () { return "pink"; };
+	this.fake = false;
 }
-World.prototype.addFakePlayer = function () {
+World.prototype.addFakePlayer = function (flag) {
 
-	this.player = new Cell($V(320, 240), $V(0, 0), 4);
+	if (flag == 0)
+		this.player = new Cell($V(320, 240), $V(0, 0), 4 );
+	else if (flag == 1)	
+		this.player = new Cell($V(320, 240), $V(0, 0), 100 );
+	else if (flag == 2)	
+		this.player = new Cell($V(320, 240), $V(0, 0), 0 );
 	this.player.colour = function () { return "pink"; };
+	this.fake = true;
 }
 
 World.prototype.staticlevel = function (flag) {
@@ -167,7 +174,7 @@ World.prototype.update = function () {
 
 	if (cells.length > 0)
 	var smallest = (cells[ Math.floor(cells.length /4 )]).radius;
-	if (this.player){
+	if (this.player && !this.fake){
 		if (smallest > this.player.radius)
 				this.likely = false;
 				
@@ -175,13 +182,13 @@ World.prototype.update = function () {
 			if (G.multiplayer) {
 				G.net.lose();
 			} else {
-				G.current = new Lose();
+				G.current = new Lose(2);
 			}
 		}
 
 
 		if ( ((cells[cells.length-1]).radius == this.player.radius) && !G.multiplayer)
-			G.current = new Win();
+			G.current = new Lose(1);
 	}
 
 }
