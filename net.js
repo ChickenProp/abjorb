@@ -47,9 +47,8 @@ Net.prototype.connect = function () {
 				net.players = [];
 			} else if (data[0] == 'win') {
 				net.running = false;
-				net.message = "You win."
-				net.message2 = "Click for menu."
-				net.reset = true;
+				G.net = new Net();
+				G.current = new Win();
 				G.mainloop = setInterval(G.mainloopfn, 1000/60);
 			} else if (data[0] == 'players') {
 				net.players = data[1];
@@ -97,9 +96,8 @@ Net.prototype.go = function () {
 Net.prototype.lose = function () {
 	this.conn.send('["lose"]');
 	this.running = false;
-	this.message = "You lose."
-	this.message2 = "Click for menu."
-	this.reset = true;
+	G.net = new Net();
+	G.current = new Lose();
 	G.mainloop = setInterval(G.mainloopfn, 1000/60);
 }
 
