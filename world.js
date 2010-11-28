@@ -8,31 +8,38 @@ function World () {
 }
 
 World.prototype.addPlayer = function () {
-	this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 4));
+	this.player = this.addCell(new Cell($V(320, 240), $V(0, 0), 8));
 	this.player.colour = function () { return "pink"; };
 }
 
 World.prototype.staticlevel = function () {
-	for (i = 0; i < 100; i++) {
-		var x = Math.random()*this.width-40+20;
-		var y = Math.random()*this.height-40+20;
-		var r = 8*Math.random()+4;
-		if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
-								 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
-			this.addCell(new Cell($V(x,y),
-						  $V(0,0),
-						  r));
+	for (j = 3 ; j >=0 ; j--){
+
+		for (i = 0; i < 200; i++) {
+			var x = Math.random()*this.width-40+20;
+			var y = Math.random()*this.height-40+20;
+			var r = (8*Math.random()+4)*(j);
+			if(!this.collisions(new Cell($V(x,y),$V(0,0),r ))){
+				if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+										 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+					this.addCell(new Cell($V(x,y),
+								  $V(0,0),
+								  r));
+				}
+			}
 		}
 	}
 	for (i = 0; i < 600; i++) {
 		var x =Math.random()*this.width-40+20;
 		var y = Math.random()*this.height-40+20;
-		var r =  1+3*Math.random();
-		if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
-								 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
-			this.addCell(new Cell($V(x,y),
-							  $V(0,0),
-							  r));
+		var r =  3+10*Math.random();
+		if(!this.collisions(new Cell($V(x,y),$V(0,0),r ))){
+			if ( this.player && ( x + r < (this.player.pos.x - this.player.radius) || x - r > (	this.player.pos.x + this.player.radius) &&
+									 y + r < (this.player.pos.y - this.player.radius) || y - r > (	this.player.pos.y + this.player.radius)  )){
+				this.addCell(new Cell($V(x,y),
+								  $V(0,0),
+								  r));
+			}
 		}
 	}
 }
@@ -147,7 +154,7 @@ World.prototype.update = function () {
 
 
 		if ( ((cells[cells.length-1]).radius == this.player.radius) && !G.multiplayer)
-			G.current = new Title();
+			G.current = new Win();
 	}
 
 }
@@ -247,8 +254,11 @@ World.prototype.scrollHandler = function (e){
 }
 
 World.prototype.collisions = function (cell) {
-	for (i = 0; i < this.cells.length ; i++){}
-
+	for (i = 0; i < this.cells.length ; i++){
+		if ( Math.abs(cell.pos.s(this.cells[i].pos) < (cell.radius +this.cells[i].radius)*(cell.radius +this.cells[i].radius)))
+			return true;
+	}
+	return false;
 }
 
 
