@@ -1,3 +1,7 @@
+May 2025: I've been getting dependabot security alerts about this repository
+(specifically the use of jquery). I don't care to investigate or fix them, so
+I've wiped the contents. They're still available in history of course.
+
 				/////////////////////////////
 				-----------------------------
 				*****************************
